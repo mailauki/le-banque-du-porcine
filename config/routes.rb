@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :lists
   resources :wallets
   resources :balances
   resources :items
@@ -9,7 +10,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get '/hello', to: 'application#hello_world'
+  
+  # get '/hello', to: 'application#hello_world'
 
   get '*path',
       to: 'fallback#index',

@@ -3,6 +3,7 @@ class CreateItems < ActiveRecord::Migration[7.0]
     create_table :items do |t|
       t.string :name
       t.float :price
+      t.integer :list_id
 
       t.timestamps
     end
