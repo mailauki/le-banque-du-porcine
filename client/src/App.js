@@ -1,34 +1,42 @@
-import logo from './logo.png';
 import './App.css';
-import { useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Switch, Route, useLocation } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState(null)
+  let pathname = useLocation().pathname
 
   useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-  }, []);
+    fetch("/me")
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setUser(user))
+        }
+      })
+  }, [])
+
+  console.log({user})
 
   return (
-    <BrowserRouter>
       <div className="App">
-        <header className="App-header">
-          <h1>Le Banque Du Porcine</h1>
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
+        <Header pathname={pathname} />
+
         <Switch>
-          <Route path="/testing">
-            <h1>Test Route</h1>
+          <Route path="/login">
+            <Login onLogin={setUser} />
+          </Route>
+          <Route path="/signup">
+            <Signup onLogin={setUser} />
           </Route>
           <Route path="/">
-            <h1>Page Count: {count}</h1>
+            <Home />
           </Route>
         </Switch>
       </div>
-    </BrowserRouter>
   );
 }
 
