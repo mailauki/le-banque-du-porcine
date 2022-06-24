@@ -1,10 +1,14 @@
-import LoginBtn from './LoginBtn'
+import { Link } from 'react-router-dom';
+import LoginBtn from './LoginBtn';
+import Menu from './AccountMenu';
 
-function Header({pathname}) {
+function Header({pathname, user, onLogout}) {
   return(
     <header className="Header">
-      <h1>Le Banque Du Porcine</h1>
-      <LoginBtn pathname={pathname} />
+      <Link>
+        <h1>Le Banque Du Porcine</h1>
+      </Link>
+      <LoginBtn pathname={pathname} user={user} onLogout={onLogout} />
     </header>
   )
 }

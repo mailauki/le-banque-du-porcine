@@ -5,8 +5,50 @@
   color: white;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
+}
+
+.Header {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.LoginBtn {
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .Header {
+    font-size: 2vw;
+  }
+  .LoginBtn {
+    font-size: 2.8vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .Header {
+    font-size: 9px;
+  }
+  .LoginBtn {
+    font-size: 12px;
+  }
+}
+
+.Header a {
+  text-decoration: none;
+  color: #eee;
+}
+
+.Header a:hover {
+  color: #bbb;
+}
+
+.LoginBtn {
+  display: flex;
+  justify-content: center;
 }
 
 .App-logo {
@@ -25,10 +67,6 @@
   font-size: calc(10px + 2vmin);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,17 +74,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.Header {
-  font-size: calc(10px + 2vmin);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
-}
-
-.LoginBtn {
-  display: flex;
-  justify-content: center;
 }

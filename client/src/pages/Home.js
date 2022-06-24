@@ -1,9 +1,9 @@
 import Content from "../components/Content";
 
-function Home() {
+function Home({user}) {
   return(
     <div className="Home">
-      <Content />
+      <Content user={user} />
     </div>
   )
 }

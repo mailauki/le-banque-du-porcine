@@ -23,7 +23,7 @@ function App() {
 
   return (
       <div className="App">
-        <Header pathname={pathname} />
+        <Header pathname={pathname} user={user} onLogout={setUser} />
 
         <Switch>
           <Route path="/login">
@@ -33,7 +33,7 @@ function App() {
             <Signup onLogin={setUser} />
           </Route>
           <Route path="/">
-            <Home />
+            <Home user={user} />
           </Route>
         </Switch>
       </div>
