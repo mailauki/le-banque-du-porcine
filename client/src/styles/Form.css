@@ -1,0 +1,37 @@
+.Login h1, .Signup h1 {
+  font-family: 'Ink Free', 'Segoe Print';
+  font-size: 300%;
+}
+
+.Form, .form-input {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.Form input, .Form button {
+  border-radius: 5px;
+  border: none;
+  background-color: #eee;
+}
+
+.Form input {
+  padding: 10px;
+}
+
+.Form button {
+  margin: 20px auto;
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Form button:hover {
+  background-color: lightcoral;
+  color: white;
+}

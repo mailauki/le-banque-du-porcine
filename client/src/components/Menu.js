@@ -41,9 +41,7 @@ function AccountMenu({user, onLogout}) {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
-        <Tooltip title="Account settings">
+        <Tooltip title="Account Settings">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -91,12 +89,12 @@ function AccountMenu({user, onLogout}) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem sx={{color: "#222"}}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Avatar /> My Account
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
         {/* <MenuItem>
           <ListItemIcon>

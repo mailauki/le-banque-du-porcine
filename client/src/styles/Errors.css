@@ -1,0 +1,8 @@
+.Errors {
+  background-color: indianred;
+  font-weight: 600;
+  padding: 10px 0;
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
+}

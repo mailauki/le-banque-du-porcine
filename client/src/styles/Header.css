@@ -1,0 +1,43 @@
+.Header {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 20px;
+}
+
+.LoginBtn {
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .Header {
+    font-size: 2vw;
+  }
+  .LoginBtn {
+    font-size: 2.8vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .Header {
+    font-size: 10px;
+  }
+  .LoginBtn {
+    font-size: 14px;
+  }
+}
+
+.Header a {
+  text-decoration: none;
+  color: #eee;
+}
+
+.Header a:hover {
+  color: lightcoral;
+}
+
+.LoginBtn {
+  display: flex;
+  justify-content: center;
+}

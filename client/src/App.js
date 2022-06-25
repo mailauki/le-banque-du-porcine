@@ -1,4 +1,7 @@
-import './App.css';
+import './styles/App.css';
+import './styles/Header.css';
+import './styles/Errors.css';
+import './styles/Form.css';
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
@@ -25,17 +28,19 @@ function App() {
       <div className="App">
         <Header pathname={pathname} user={user} onLogout={setUser} />
 
-        <Switch>
-          <Route path="/login">
-            <Login onLogin={setUser} />
-          </Route>
-          <Route path="/signup">
-            <Signup onLogin={setUser} />
-          </Route>
-          <Route path="/">
-            <Home user={user} />
-          </Route>
-        </Switch>
+        <div className="Body">
+          <Switch>
+            <Route path="/login">
+              <Login onLogin={setUser} />
+            </Route>
+            <Route path="/signup">
+              <Signup onLogin={setUser} />
+            </Route>
+            <Route path="/">
+              <Home user={user} />
+            </Route>
+          </Switch>
+        </div>
       </div>
   );
 }

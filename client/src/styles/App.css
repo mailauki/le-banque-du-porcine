@@ -7,48 +7,15 @@
   flex-direction: column;
 }
 
-.Header {
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
+.Body {
+  width: 600px;
+  margin: 0 auto;
 }
 
-.LoginBtn {
-  font-size: 18px;
-}
-
-@media (max-width: 600px) {
-  .Header {
-    font-size: 2vw;
+@media (max-width: 700px) {
+  .Body {
+    width: 80%;
   }
-  .LoginBtn {
-    font-size: 2.8vw;
-  }
-}
-
-@media (max-width: 400px) {
-  .Header {
-    font-size: 9px;
-  }
-  .LoginBtn {
-    font-size: 12px;
-  }
-}
-
-.Header a {
-  text-decoration: none;
-  color: #eee;
-}
-
-.Header a:hover {
-  color: #bbb;
-}
-
-.LoginBtn {
-  display: flex;
-  justify-content: center;
 }
 
 .App-logo {
