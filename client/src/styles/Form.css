@@ -14,6 +14,7 @@
   border-radius: 5px;
   border: none;
   background-color: #eee;
+  color: #222;
 }
 
 .Form input {
@@ -23,7 +24,7 @@
 .Form button {
   margin: 20px auto;
   text-align: center;
-  padding: 12px;
+  padding: 16px;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: bold;
@@ -34,4 +35,21 @@
 .Form button:hover {
   background-color: lightcoral;
   color: white;
+}
+
+.AddWallet .Form, .AddList .Form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.AddWallet input, .AddList input {
+  width: 84%;
+}
+
+.AddWallet .Form button, .AddList .Form button {
+  width: 20%;
+  /* height: 100%; */
+  /* margin-left: 10px; */
 }

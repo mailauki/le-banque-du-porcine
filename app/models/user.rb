@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :progresses
-  has_one :wallets
+  has_many :wallets
   has_many :lists
 
   validates :username, presence: true, uniqueness: true

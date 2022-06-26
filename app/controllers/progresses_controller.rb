@@ -1,5 +1,5 @@
 class ProgressesController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show, :create]
+  skip_before_action :authorize, only: [:index, :show]
 
   def index
     progresses = Progress.all

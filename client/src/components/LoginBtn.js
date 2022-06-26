@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { useLocation, useHistory } from "react-router-dom";
-import { styled, alpha } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Login from '@mui/icons-material/Login';
-import PersonAdd from '@mui/icons-material/PersonAdd';
+import { Button, Menu, MenuItem, ListItemIcon } from '@mui/material';
+import { Login, PersonAdd } from '@mui/icons-material';
 
 function PositionedMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -68,7 +63,7 @@ function PositionedMenu() {
       >
         <MenuItem onClick={handleLogin}>
           <ListItemIcon>
-            <Login fontSize="small" />
+            <Login fontSize="small"/>
           </ListItemIcon>
           Login
         </MenuItem>

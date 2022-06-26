@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show, :create]
+  skip_before_action :authorize, only: [:index, :show]
 
   def index
     lists = List.all
@@ -12,8 +12,15 @@ class ListsController < ApplicationController
   end
 
   def create
-    list = List.create!(list_params)
+    list = @current_user.lists.create!(list_params)
+    # list = List.create!(list_params)
     render json: list, status: :created
+  end
+
+  def destroy
+    list = List.find(params[:id])
+    list.destroy
+    head :no_content
   end
 
   private
