@@ -13,28 +13,16 @@
   padding-bottom: 4em;
 }
 
-.ListsContainer, .WalletsContainer {
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-between;
-  align-items: center;
-}
-
-.Wallets {
-  display: flex;
-  flex-direction: column;
-}
-
-/* .WalletEl {
-  display: flex;
-  flex-direction: row;
-} */
-
 .box {
   border-radius: 5px;
   border: 2px solid white;
   margin: 10px;
   padding: 8px;
+}
+
+.underline {
+  border-bottom: 2px solid white;
+  padding: 4px 0;
 }
 
 @media (max-width: 700px) {

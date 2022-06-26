@@ -1,0 +1,31 @@
+.WalletsContainer, .ListsContainer {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+}
+
+.Heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.Wallets, .Lists, .Balances {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: stretch; */
+  /* align-items: flex-start; */
+  width: 100%;
+}
+
+/* .WalletEl, .ListEl, .BalanceEl {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 84%;
+  margin: 0;
+} */

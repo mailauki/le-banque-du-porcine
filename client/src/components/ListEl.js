@@ -1,30 +1,27 @@
-import IconButton from '@mui/material/IconButton';
-import { Add, Clear } from '@mui/icons-material';
+import Items from './Items';
+import DeleteBtn from './DeleteBtn';
 
-function ListEl({list}) {
+function ListEl({list, onDelete}) {
   function handleDelete() {
-    console.log("delete")
-    console.log({list})
+    fetch(`/lists/${list.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(() => {
+      onDelete(list)
+    })
   }
+
   return(
-    <div className="ListEl">
-      {list.name}
-      <IconButton
-        onClick={handleDelete}
-        id="button"
-        aria-label="delete list"
-        component="span"
-        color="primary"
-        sx={{
-          marginLeft: "10px",
-          "&:hover": {
-            backgroundColor: "#eee2",
-            color: "#eee"
-          }
-        }}
-      >
-        <Clear fontSize="small" />
-      </IconButton>
+    <div className="ListEl box">
+      <div className="Heading underline">
+        <p>{list.name}</p>
+        <p>Total: ${parseFloat(list.total_cost).toFixed(2)}</p>
+        <DeleteBtn onClick={handleDelete} />
+      </div>
+      <Items items={list.items} />
     </div>
   )
 }

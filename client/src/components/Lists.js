@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import ListEl from './ListEl';
+import AddBtn from './AddBtn';
 import AddList from './AddList';
-import IconButton from '@mui/material/IconButton';
-import { Add } from '@mui/icons-material';
+import { ClickAwayListener } from '@mui/material';
 
 function Lists({user}) {
   const [lists, setLists] = useState([])
-  const [isEditing, setIsEditing] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     fetch("/lists")
@@ -14,39 +14,47 @@ function Lists({user}) {
     .then((data) => setLists(data))
   }, [])
 
+  function handleClick() {
+    setOpen((prev) => !prev)
+  }
+  
+  function handleClickAway() {
+    setOpen(false)
+  }
+
   function handleAdd(data) {
     setLists([...lists, data])
-    setIsEditing(false)
+    setOpen(false)
+  }
+
+  function handleRemove(deletedList) {
+    const updatedLists = lists.filter( list => {
+      if(list.id !== deletedList.id) return list
+    } )
+    setLists(updatedLists)
   }
 
   return(
     user ? (
-      !isEditing ? (
+      <ClickAwayListener onClickAway={handleClickAway}>
         <div className="ListsContainer box">
-          <div className="Lists">
-            {user.lists.map( list => (
-              <ListEl key={list.id} list={list} />
-            ) )}
-          </div>
-          <IconButton
-            onClick={() => setIsEditing(true)}
-            id="button"
-            aria-label="add list"
-            component="span"
-            color="primary"
-            sx={{
-              "&:hover": {
-                backgroundColor: "#eee2",
-                color: "#eee"
-              }
-            }}
-          >
-            <Add fontSize="small" className="icon" />
-          </IconButton>
+          {!open ? (
+            <>
+              <div className="Heading">
+                <h3>Lists</h3>
+                <AddBtn onClick={handleClick} />
+              </div>
+              <div className="Lists">
+                {lists.map( list => (
+                  <ListEl key={list.id} list={list} onDelete={handleRemove} />
+                ) )}
+              </div>
+            </>
+          ) : (
+            <AddList onSubmit={handleAdd} />
+          )}
         </div>
-      ) : (
-        <AddList onSubmit={handleAdd} />
-      )
+      </ClickAwayListener>
     ) : (
       <></>
     )

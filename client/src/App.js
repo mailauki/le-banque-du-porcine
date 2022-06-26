@@ -2,6 +2,7 @@ import './styles/App.css';
 import './styles/Header.css';
 import './styles/Errors.css';
 import './styles/Form.css';
+import './styles/Lists.css';
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';

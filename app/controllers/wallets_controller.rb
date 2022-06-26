@@ -1,8 +1,9 @@
 class WalletsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show]
+  skip_before_action :authorize, only: [:show]
 
   def index
-    wallets = Wallet.all
+    # wallets = Wallet.all
+    wallets = @current_user.wallets.all
     render json: wallets
   end
 

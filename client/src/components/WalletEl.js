@@ -1,5 +1,5 @@
-import IconButton from '@mui/material/IconButton';
-import { Clear } from '@mui/icons-material';
+import Balances from './Balances';
+import DeleteBtn from './DeleteBtn';
 
 function WalletEl({wallet, onDelete}) {
   function handleDelete() {
@@ -15,25 +15,15 @@ function WalletEl({wallet, onDelete}) {
   }
 
   return(
-    <div className="WalletEl">
-        {wallet.name}
-        <IconButton
-          onClick={handleDelete}
-          id="button"
-          aria-label="delete wallet"
-          component="span"
-          color="primary"
-          sx={{
-            marginLeft: "10px",
-            "&:hover": {
-              backgroundColor: "#eee2",
-              color: "#eee"
-            }
-          }}
-        >
-          <Clear fontSize="small" />
-        </IconButton>
+    <div className="WalletEl box">
+      <div className="Heading underline">
+        <p>{wallet.name}</p>
+        <p>Total: ${parseFloat(wallet.total_balance).toFixed(2)}</p>
+        {/* update total_balance when a balance is removed */}
+        <DeleteBtn onClick={handleDelete} />
       </div>
+      <Balances balances={wallet.balances} wallet={wallet} />
+    </div>
   )
 }
 

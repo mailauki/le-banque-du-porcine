@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react';
 import WalletEl from './WalletEl';
+import AddBtn from './AddBtn';
 import AddWallet from './AddWallet';
-import IconButton from '@mui/material/IconButton';
-import { Add } from '@mui/icons-material';
+import { ClickAwayListener, Box } from '@mui/material';
 
 function Wallets({user}) {
   const [wallets, setWallets] = useState([])
-  const [isEditing, setIsEditing] = useState(false)
-
+  const [open, setOpen] = useState(false)
+  
   useEffect(() => {
     fetch("/wallets")
     .then((r) => r.json())
     .then((data) => setWallets(data))
   }, [])
 
-  function handleAdd(data) {
-    setWallets([...wallets, data])
-    setIsEditing(false)
+  function handleClick() {
+    setOpen((prev) => !prev)
   }
 
-  function handleDelete(deletedWallet) {
+  function handleClickAway() {
+    setOpen(false)
+  }
+
+  function handleAdd(data) {
+    setWallets([...wallets, data])
+    setOpen(false)
+  }
+
+  function handleRemove(deletedWallet) {
     const updatedWallets = wallets.filter( wallet => {
       if(wallet.id !== deletedWallet.id) return wallet
     } )
@@ -28,34 +36,25 @@ function Wallets({user}) {
 
   return(
     user ? (
-      !isEditing ? (
+      <ClickAwayListener onClickAway={handleClickAway}>
         <div className="WalletsContainer box">
-          <div className="Wallets">
-            {wallets.map( wallet => (
-              <WalletEl key={wallet.id} wallet={wallet} onDelete={handleDelete} />
-            ) )}
-          </div>
-          <IconButton
-            onClick={() => setIsEditing(true)}
-            id="button"
-            aria-label="add wallet"
-            component="span"
-            color="primary"
-            sx={{
-              // backgroundColor: "white",
-              // color: "lightcoral",
-              "&:hover": {
-                backgroundColor: "#eee2",
-                color: "#eee"
-              }
-            }}
-          >
-            <Add fontSize="small" />
-          </IconButton>
+          {!open ? (
+            <>
+              <div className="Heading">
+                <h3>Wallets</h3>
+                <AddBtn onClick={handleClick} />
+              </div>
+              <div className="Wallets">
+                {wallets.map( wallet => (
+                  <WalletEl key={wallet.id} wallet={wallet} onDelete={handleRemove} />
+                ) )}
+              </div>
+            </>
+          ) : (
+            <AddWallet onSubmit={handleAdd} />
+          )}
         </div>
-      ) : (
-        <AddWallet onSubmit={handleAdd} />
-      )
+      </ClickAwayListener>
     ) : (
       <></>
     )

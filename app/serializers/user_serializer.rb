@@ -3,4 +3,5 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :wallets
   has_many :lists
+  has_many :balances, through: :wallets
 end

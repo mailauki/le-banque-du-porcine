@@ -1,8 +1,9 @@
 class ListsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show]
+  skip_before_action :authorize, only: [:show]
 
   def index
-    lists = List.all
+    # lists = List.all
+    lists = @current_user.lists.all
     render json: lists
   end
 

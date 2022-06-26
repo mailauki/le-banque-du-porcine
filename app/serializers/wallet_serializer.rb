@@ -1,9 +1,11 @@
 class WalletSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :total_balance
   
-  # def total_balance
-  #   object.balances.map( balance => balance.amount ).sum
-  # end
+  def total_balance
+    object.balances.map do |balance|
+      balance.amount
+    end.sum
+  end
 
-  # has_many :balances
+  has_many :balances
 end
