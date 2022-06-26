@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show, :create]
+  skip_before_action :authorize, only: [:show]
 
   def index
-    items = Item.all
+    # items = Item.all
+    items = @current_user.lists.find(params[:id]).items.all
     render json: items
   end
 
@@ -13,8 +14,15 @@ class ItemsController < ApplicationController
 
   def create
     # item = @current_user.lists.items.create!(item_params)
-    item = Item.create!(item_params)
+    item = @current_user.lists.find(params[:id]).items.create!(item_params)
+    # item = Item.create!(item_params)
     render json: item, status: :created
+  end
+  
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    head :no_content
   end
 
   private

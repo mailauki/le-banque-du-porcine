@@ -21,7 +21,7 @@ function ListEl({list, onDelete}) {
         <p>Total: ${parseFloat(list.total_cost).toFixed(2)}</p>
         <DeleteBtn onClick={handleDelete} />
       </div>
-      <Items items={list.items} />
+      <Items list={list} />
     </div>
   )
 }

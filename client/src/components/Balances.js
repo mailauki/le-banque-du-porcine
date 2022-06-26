@@ -44,9 +44,13 @@ function Balances({wallet}) {
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Balances">
-              {balances.map( balance => (
-                <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
-              ) )}
+              {balances.length > 0 ? (
+                balances.map( balance => (
+                  <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
+                ) )
+              ) : (
+                <></>
+              )}
             </div>
           </>
         ) : (

@@ -13,7 +13,7 @@ class BalancesController < ApplicationController
   end
 
   def create
-    balance = @current_user.wallets.find(:params[:id]).balances.create!(balance_params)
+    balance = @current_user.wallets.find(params[:id]).balances.create!(balance_params)
     balance = Balance.create!(balance_params)
     render json: balance, status: :created
   end

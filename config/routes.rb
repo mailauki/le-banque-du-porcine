@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get "/:id/balances", to: "balances#index"
   post "/:id/balances", to: "balances#create"
 
+  get "/:id/items", to: "items#index"
+  post "/:id/items", to: "items#create"
+
   get '*path',
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }

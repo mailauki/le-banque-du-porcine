@@ -1,20 +1,20 @@
 import { useState } from "react";
 import Errors from './Errors';
 
-function AddBalance({id, onSubmit}) {
+function AddItem({id, onSubmit}) {
   const [name, setName] = useState("")
-  const [amount, setAmount] = useState(0)
+  const [price, setPrice] = useState(0)
   const [errors, setErrors] = useState([])
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    fetch(`/${id}/balances`, {
+    fetch(`/${id}/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({name: name, amount: amount})
+      body: JSON.stringify({name: name, price: price})
     })
     .then((r) => {
       if (r.ok) {
@@ -29,15 +29,15 @@ function AddBalance({id, onSubmit}) {
   }
 
   return(
-    <div className="AddBalance box">
+    <div className="AddItem box">
       <form className="Form" onSubmit={handleSubmit}>
         <div className="form-input">
           <label>Name</label>
           <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div className="form-input">
-          <label>Amount</label>
-          <input type="number" step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} />
+          <label>Price</label>
+          <input type="number" step="0.01" value={price} onChange={(event) => setPrice(event.target.value)} />
         </div>
         <button className="form-input button" type="submit">Add</button>
       </form>
@@ -46,4 +46,4 @@ function AddBalance({id, onSubmit}) {
   )
 }
 
-export default AddBalance;
+export default AddItem;
