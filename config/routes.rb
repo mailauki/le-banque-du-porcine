@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  # get '/hello', to: 'application#hello_world'
-
   post "/signup", to: "users#create"
   get "/me", to: "users#me"
   get "/:username", to: "users#show"
@@ -25,6 +23,9 @@ Rails.application.routes.draw do
 
   get "/:id/items", to: "items#index"
   post "/:id/items", to: "items#create"
+  
+  # get "/:id/goals", to: "goals#index"
+  # post "/:id/goals", to: "goals#create"
 
   get '*path',
       to: 'fallback#index',

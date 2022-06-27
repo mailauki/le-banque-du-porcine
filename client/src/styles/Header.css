@@ -30,7 +30,8 @@
 
 .Header a {
   text-decoration: none;
-  color: #eee;
+  /* color: #eee; */
+  color: #333;
 }
 
 .Header a:hover {

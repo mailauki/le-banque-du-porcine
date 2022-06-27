@@ -17,15 +17,15 @@ function Login({onLogin}) {
       },
       body: JSON.stringify({username, password})
     })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => onLogin(user))
-          // history.push("/me")
-          history.push("/")
-        } else {
-          r.json().then((err) => setErrors(err.errors))
-        }
-      })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((user) => onLogin(user))
+        // history.push("/me")
+        history.push("/")
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      }
+    })
   }
 
   return(

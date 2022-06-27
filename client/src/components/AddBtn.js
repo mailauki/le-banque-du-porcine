@@ -1,4 +1,4 @@
-import IconButton from '@mui/material/IconButton';
+import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 function AddBtn({onClick}) {
@@ -9,14 +9,12 @@ function AddBtn({onClick}) {
       aria-label="add"
       component="span"
       color="primary"
-      sx={{
-        // backgroundColor: "white",
-        // color: "lightcoral",
-        "&:hover": {
-          backgroundColor: "#eee2",
-          color: "#eee"
-        }
-      }}
+      // sx={{
+      //   "&:hover": {
+      //     backgroundColor: "#eee2",
+      //     color: "#eee"
+      //   }
+      // }}
     >
       <Add fontSize="small" />
     </IconButton>

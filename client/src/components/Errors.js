@@ -6,7 +6,6 @@ function Errors({errors}) {
           {errors.map((err) => (
             <p key={err}>{err}</p>
           ))}
-          {/* {console.log(errors)} */}
         </div>
       ) : (
         <></>

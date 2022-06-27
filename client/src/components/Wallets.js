@@ -45,9 +45,13 @@ function Wallets({user}) {
                 <AddBtn onClick={handleClick} />
               </div>
               <div className="Wallets">
-                {wallets.map( wallet => (
-                  <WalletEl key={wallet.id} wallet={wallet} onDelete={handleRemove} />
-                ) )}
+                {wallets.length > 0 ? (
+                  wallets.map( wallet => (
+                    <WalletEl key={wallet.id} wallet={wallet} onDelete={handleRemove} />
+                  ) )
+                ) : (
+                  <></>
+                )}
               </div>
             </>
           ) : (

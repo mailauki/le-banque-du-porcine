@@ -1,4 +1,4 @@
-import IconButton from '@mui/material/IconButton';
+import { IconButton } from '@mui/material';
 import { Clear } from '@mui/icons-material';
 
 function DeleteBtn({onClick}) {
@@ -9,13 +9,13 @@ function DeleteBtn({onClick}) {
       aria-label="delete"
       component="span"
       color="primary"
-      sx={{
-        marginLeft: "10px",
-        "&:hover": {
-          backgroundColor: "#eee2",
-          color: "#eee"
-        }
-      }}
+      // sx={{
+      //   marginLeft: "10px",
+      //   "&:hover": {
+      //     backgroundColor: "#eee2",
+      //     color: "#eee"
+      //   }
+      // }}
     >
       <Clear fontSize="small" />
     </IconButton>

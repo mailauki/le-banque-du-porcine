@@ -22,9 +22,26 @@ function Items({list}) {
     setOpen(false)
   }
 
-  function handleAdd(data) {
-    setItems([...items, data])
+  function handleAdd(newItem) {
+    setItems([...items, newItem])
     setOpen(false)
+
+    fetch("/goals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({item_id: newItem.id, balance_id: 2})
+      // set default balance from state
+    })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((goal) => console.log(goal))
+        // set to state
+      } else {
+        r.json().then((err) => console.log(err.errors))
+      }
+    })
   }
 
   function handleRemove(deletedItem) {
@@ -33,8 +50,6 @@ function Items({list}) {
     } )
     setItems(updatedItems)
   }
-
-  console.log({items})
 
   return(
     <ClickAwayListener onClickAway={handleClickAway}>

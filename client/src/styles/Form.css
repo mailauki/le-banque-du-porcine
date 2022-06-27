@@ -12,8 +12,9 @@
 
 .Form input, .Form button {
   border-radius: 5px;
-  border: none;
-  background-color: #eee;
+  /* border: none; */
+  border: 1px solid #222;
+  background-color: #fff;
   color: #222;
 }
 

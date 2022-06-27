@@ -45,9 +45,13 @@ function Lists({user}) {
                 <AddBtn onClick={handleClick} />
               </div>
               <div className="Lists">
-                {lists.map( list => (
-                  <ListEl key={list.id} list={list} onDelete={handleRemove} />
-                ) )}
+                {lists.length > 0 ? (
+                  lists.map( list => (
+                    <ListEl key={list.id} list={list} onDelete={handleRemove} />
+                  ) )
+                ) : (
+                  <></>
+                )}
               </div>
             </>
           ) : (

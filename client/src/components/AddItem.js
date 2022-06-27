@@ -19,7 +19,6 @@ function AddItem({id, onSubmit}) {
     .then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          console.log(data)
           onSubmit(data)
         })
       } else {
