@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import WalletEl from './WalletEl';
 import AddBtn from './AddBtn';
 import AddWallet from './AddWallet';
-import { ClickAwayListener, Box } from '@mui/material';
+import { ClickAwayListener } from '@mui/material';
 
 function Wallets({user}) {
   const [wallets, setWallets] = useState([])
   const [open, setOpen] = useState(false)
   
   useEffect(() => {
-    fetch("/wallets")
-    .then((r) => r.json())
-    .then((data) => setWallets(data))
-  }, [])
+    if(user) {
+      fetch("/wallets")
+      .then((r) => r.json())
+      .then((data) => setWallets(data))
+    }
+  }, [user])
 
   function handleClick() {
     setOpen((prev) => !prev)

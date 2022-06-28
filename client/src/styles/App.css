@@ -27,10 +27,6 @@
   padding: 4px 0;
 }
 
-/* .MuiCircularProgress-circle {
-  color: lightcoral;
-} */
-
 @media (max-width: 700px) {
   .Body {
     width: 80%;

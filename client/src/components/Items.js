@@ -4,15 +4,17 @@ import AddBtn from './AddBtn';
 import AddItem from './AddItem';
 import { ClickAwayListener } from '@mui/material';
 
-function Items({list}) {
+function Items({list, defaultBalance}) {
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    fetch(`/${list.id}/items`)
-    .then((r) => r.json())
-    .then((data) => setItems(data))
-  }, [])
+    if(list) {
+      fetch(`/${list.id}/items`)
+      .then((r) => r.json())
+      .then((data) => setItems(data))
+    }
+  }, [list])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -31,8 +33,7 @@ function Items({list}) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({item_id: newItem.id, balance_id: 2})
-      // set default balance from state
+      body: JSON.stringify({item_id: newItem.id, balance_id: defaultBalance.id})
     })
     .then((r) => {
       if (r.ok) {

@@ -4,15 +4,17 @@ import AddBtn from './AddBtn';
 import AddList from './AddList';
 import { ClickAwayListener } from '@mui/material';
 
-function Lists({user}) {
+function Lists({user, defaultBalance}) {
   const [lists, setLists] = useState([])
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    fetch("/lists")
-    .then((r) => r.json())
-    .then((data) => setLists(data))
-  }, [])
+    if(user) {
+      fetch("/lists")
+      .then((r) => r.json())
+      .then((data) => setLists(data))
+    }
+  }, [user])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -47,7 +49,7 @@ function Lists({user}) {
               <div className="Lists">
                 {lists.length > 0 ? (
                   lists.map( list => (
-                    <ListEl key={list.id} list={list} onDelete={handleRemove} />
+                    <ListEl key={list.id} list={list} onDelete={handleRemove} defaultBalance={defaultBalance} />
                   ) )
                 ) : (
                   <></>

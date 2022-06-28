@@ -1,7 +1,7 @@
 import Items from './Items';
 import DeleteBtn from './DeleteBtn';
 
-function ListEl({list, onDelete}) {
+function ListEl({list, onDelete, defaultBalance}) {
   function handleDelete() {
     fetch(`/lists/${list.id}`, {
       method: "DELETE",
@@ -21,7 +21,7 @@ function ListEl({list, onDelete}) {
         <p>Total: ${parseFloat(list.total_cost).toFixed(2)}</p>
         <DeleteBtn onClick={handleDelete} />
       </div>
-      <Items list={list} />
+      <Items list={list} defaultBalance={defaultBalance} />
     </div>
   )
 }

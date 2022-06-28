@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import DeleteBtn from './DeleteBtn';
-import { Button, CircularProgress, Typography, Box, MenuItem, InputLabel, FormControl, Select, LinearProgress } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 
 function ItemEl({item, onDelete}) {
   const [open, setOpen] = useState(false)

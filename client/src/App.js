@@ -12,13 +12,17 @@ import Signup from './pages/Signup';
 
 function App() {
   const [user, setUser] = useState(null)
+  const [defaultBalance, setDefaultBalance] = useState(null)
   let pathname = useLocation().pathname
 
   useEffect(() => {
     fetch("/me")
       .then((r) => {
         if (r.ok) {
-          r.json().then((user) => setUser(user))
+          r.json().then((user) => {
+            setUser(user)
+            setDefaultBalance(user.balances[0])
+          })
         }
       })
   }, [])
@@ -38,7 +42,7 @@ function App() {
               <Signup onLogin={setUser} />
             </Route>
             <Route path="/">
-              <Home user={user} />
+              <Home user={user} defaultBalance={defaultBalance} />
             </Route>
           </Switch>
         </div>

@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
 import Errors from './Errors';
 
 function AddList({onSubmit}) {
   const [name, setName] = useState("")
   const [errors, setErrors] = useState([])
-  const history = useHistory()
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -20,7 +18,6 @@ function AddList({onSubmit}) {
     .then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          console.log(data)
           onSubmit(data)
         })
       } else {

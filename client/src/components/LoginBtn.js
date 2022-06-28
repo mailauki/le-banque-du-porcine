@@ -9,10 +9,10 @@ function PositionedMenu() {
   const location = useLocation()
   const history = useHistory()
 
-  const handleClick = (event) => {
+  function handleClick(event) {
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
+  function handleClose() {
     setAnchorEl(null)
   }
 
@@ -38,8 +38,8 @@ function PositionedMenu() {
           backgroundColor: "lightcoral",
           fontWeight: "bold",
           "&:hover": {
-            backgroundColor: "#eee",
-            color: "#222"
+            backgroundColor: "#444",
+            color: "#fff"
           }
         }}
         onClick={handleClick}
@@ -47,8 +47,8 @@ function PositionedMenu() {
         {location.pathname === "/login" ? "Signup" : "Login"}
       </Button>
       <Menu
-        id="demo-positioned-button"
-        aria-labelledby="demo-positioned-menu"
+        id="positioned-button"
+        aria-labelledby="positioned-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

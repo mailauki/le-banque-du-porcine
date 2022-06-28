@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
 import Errors from './Errors';
 
 function AddWallet({onSubmit}) {
   const [name, setName] = useState("")
   const [errors, setErrors] = useState([])
-  const history = useHistory()
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -20,9 +18,6 @@ function AddWallet({onSubmit}) {
     .then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          // setWallets([...wallets, data])
-          // setIsEditing(false)
-          console.log(data)
           onSubmit(data)
         })
       } else {

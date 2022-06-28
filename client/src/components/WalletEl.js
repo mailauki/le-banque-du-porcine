@@ -22,7 +22,7 @@ function WalletEl({wallet, onDelete}) {
         {/* update total_balance when a balance is removed */}
         <DeleteBtn onClick={handleDelete} />
       </div>
-      <Balances balances={wallet.balances} wallet={wallet} />
+      <Balances wallet={wallet} />
     </div>
   )
 }

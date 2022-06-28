@@ -9,10 +9,12 @@ function Balances({wallet}) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    fetch(`/${wallet.id}/balances`)
-    .then((r) => r.json())
-    .then((data) => setBalances(data))
-  }, [])
+    if(wallet) {
+      fetch(`/${wallet.id}/balances`)
+      .then((r) => r.json())
+      .then((data) => setBalances(data))
+    }
+  }, [wallet])
 
   function handleClick() {
     setOpen((prev) => !prev)
