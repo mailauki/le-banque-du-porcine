@@ -43,6 +43,7 @@ function Balances({user}) {
           <>
             <div className="Heading underline">
               <h4>Balances</h4>
+              <p>{`Total: $${user.total_balance}`}</p>
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Balances">

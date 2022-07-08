@@ -19,6 +19,7 @@ function Items({user, defaultBalance}) {
   function handleAdd(newItem) {
     setItems([...items, newItem])
     setOpen(false)
+    // try redux here ???
   }
 
   function handleRemove(deletedItem) {
@@ -35,6 +36,7 @@ function Items({user, defaultBalance}) {
           <>
             <div className="Heading underline">
               <h4>Items</h4>
+              <p>{`Total: $${user.total_cost}`}</p> // try redux here ???
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Items">
