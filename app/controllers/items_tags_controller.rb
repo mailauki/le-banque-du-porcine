@@ -1,0 +1,2 @@
+class ItemsTagsController < ApplicationController
+end
