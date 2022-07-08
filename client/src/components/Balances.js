@@ -8,13 +8,13 @@ function Balances({wallet}) {
   const [balances, setBalances] = useState([])
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    if(wallet) {
-      fetch(`/${wallet.id}/balances`)
-      .then((r) => r.json())
-      .then((data) => setBalances(data))
-    }
-  }, [wallet])
+  // useEffect(() => {
+  //   if(wallet) {
+  //     fetch(`users/1/wallets/${wallet.id}/balances`)
+  //     .then((r) => r.json())
+  //     .then((data) => setBalances(data))
+  //   }
+  // }, [wallet])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -46,13 +46,13 @@ function Balances({wallet}) {
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Balances">
-              {balances.length > 0 ? (
+              {/* {balances.length > 0 ? (
                 balances.map( balance => (
                   <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
                 ) )
               ) : (
                 <></>
-              )}
+              )} */}
             </div>
           </>
         ) : (

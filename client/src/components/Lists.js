@@ -8,13 +8,13 @@ function Lists({user, defaultBalance}) {
   const [lists, setLists] = useState([])
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    if(user) {
-      fetch("/lists")
-      .then((r) => r.json())
-      .then((data) => setLists(data))
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if(user) {
+  //     fetch(`/users/${user.id}/lists`)
+  //     .then((r) => r.json())
+  //     .then((data) => setLists(data))
+  //   }
+  // }, [user])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -47,13 +47,13 @@ function Lists({user, defaultBalance}) {
                 <AddBtn onClick={handleClick} />
               </div>
               <div className="Lists">
-                {lists.length > 0 ? (
+                {/* {lists.length > 0 ? (
                   lists.map( list => (
                     <ListEl key={list.id} list={list} onDelete={handleRemove} defaultBalance={defaultBalance} />
                   ) )
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </>
           ) : (

@@ -10,21 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_27_011924) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_08_172004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "balances", force: :cascade do |t|
     t.string "name"
     t.float "amount"
-    t.integer "wallet_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "goals", force: :cascade do |t|
-    t.integer "item_id"
-    t.integer "balance_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -33,37 +25,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_27_011924) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.float "price"
-    t.integer "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "priority"
+    t.integer "balance_id"
   end
 
-  create_table "lists", force: :cascade do |t|
+  create_table "items_tags", id: false, force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "tag_id", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "progresses", force: :cascade do |t|
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "list_id"
-    t.integer "wallet_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
     t.string "first_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "wallets", force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

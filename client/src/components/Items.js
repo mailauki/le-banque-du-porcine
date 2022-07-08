@@ -8,13 +8,13 @@ function Items({list, defaultBalance}) {
   const [items, setItems] = useState([])
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    if(list) {
-      fetch(`/${list.id}/items`)
-      .then((r) => r.json())
-      .then((data) => setItems(data))
-    }
-  }, [list])
+  // useEffect(() => {
+  //   if(list) {
+  //     fetch(`users/1/lists/${list.id}/items`)
+  //     .then((r) => r.json())
+  //     .then((data) => setItems(data))
+  //   }
+  // }, [list])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -62,17 +62,17 @@ function Items({list, defaultBalance}) {
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Items">
-              {items.length > 0 ? (
+              {/* {items.length > 0 ? (
                 items.map( item => (
                   <ItemEl key={item.id} item={item} onDelete={handleRemove} />
                 ) )
               ) : (
                 <></>
-              )}
+              )} */}
             </div>
           </>
         ) : (
-          <AddItem onSubmit={handleAdd} id={list.id} />
+          <AddItem onSubmit={handleAdd} id={list.id} defaultBalance={defaultBalance} />
         )}
       </div>
     </ClickAwayListener>

@@ -8,13 +8,13 @@ function Wallets({user}) {
   const [wallets, setWallets] = useState([])
   const [open, setOpen] = useState(false)
   
-  useEffect(() => {
-    if(user) {
-      fetch("/wallets")
-      .then((r) => r.json())
-      .then((data) => setWallets(data))
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if(user) {
+  //     fetch(`/users/${user.id}/wallets`)
+  //     .then((r) => r.json())
+  //     .then((data) => setWallets(data))
+  //   }
+  // }, [user])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -47,13 +47,13 @@ function Wallets({user}) {
                 <AddBtn onClick={handleClick} />
               </div>
               <div className="Wallets">
-                {wallets.length > 0 ? (
+                {/* {wallets.length > 0 ? (
                   wallets.map( wallet => (
                     <WalletEl key={wallet.id} wallet={wallet} onDelete={handleRemove} />
                   ) )
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </>
           ) : (

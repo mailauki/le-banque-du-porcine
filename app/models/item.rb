@@ -1,5 +1,3 @@
 class Item < ApplicationRecord
-  # belongs_to :goal
-  belongs_to :list
-  has_one :goal
+  belongs_to :user
 end

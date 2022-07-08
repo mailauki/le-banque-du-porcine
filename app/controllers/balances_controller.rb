@@ -3,7 +3,7 @@ class BalancesController < ApplicationController
 
   def index
     # balances = Balance.all
-    balances = @current_user.wallets.find(params[:id]).balances
+    balances = @current_user.wallets.find(params[:wallet_id]).balances
     render json: balances
   end
 
@@ -13,7 +13,7 @@ class BalancesController < ApplicationController
   end
 
   def create
-    balance = @current_user.wallets.find(params[:id]).balances.create!(balance_params)
+    balance = @current_user.wallets.find(params[:wallet_id]).balances.create!(balance_params)
     balance = Balance.create!(balance_params)
     render json: balance, status: :created
   end

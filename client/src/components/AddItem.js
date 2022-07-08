@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Errors from './Errors';
 
-function AddItem({id, onSubmit}) {
+function AddItem({id, onSubmit, defaultBalance}) {
   const [name, setName] = useState("")
   const [price, setPrice] = useState(0)
   const [errors, setErrors] = useState([])
@@ -9,22 +9,24 @@ function AddItem({id, onSubmit}) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    fetch(`/${id}/items`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({name: name, price: price})
-    })
-    .then((r) => {
-      if (r.ok) {
-        r.json().then((data) => {
-          onSubmit(data)
-        })
-      } else {
-        r.json().then((err) => setErrors(err.errors))
-      }
-    })
+    if(defaultBalance) {
+      fetch(`/${id}/items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name: name, price: price})
+      })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            onSubmit(data)
+          })
+        } else {
+          r.json().then((err) => setErrors(err.errors))
+        }
+      })
+    }
   }
 
   return(

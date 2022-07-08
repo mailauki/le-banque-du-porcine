@@ -1,5 +1,4 @@
 class Balance < ApplicationRecord
-  # has_many :goals
-  # belongs_to :goal
-  belongs_to :wallet
+  belongs_to :user
+  has_many :items
 end

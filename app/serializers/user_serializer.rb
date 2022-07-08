@@ -1,10 +1,18 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :first_name
 
-  has_many :wallets
-  has_many :lists
-  has_many :progresses
-  has_many :goals
-  has_many :balances, through: :wallets
-  has_many :items, through: :lists
+  # def total_balance
+  #   object.balances.map do |balance|
+  #     balance.amount
+  #   end.sum if object.balances
+  # end
+
+  # def total_cost
+  #   object.items.map do |item|
+  #     item.price
+  #   end.sum if object.items
+  # end
+
+  has_many :balances
+  has_many :items
 end

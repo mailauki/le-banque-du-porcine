@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import DeleteBtn from './DeleteBtn';
-import { LinearProgress } from '@mui/material';
+// import { LinearProgress } from '@mui/material';
 
 function ItemEl({item, onDelete}) {
   const [open, setOpen] = useState(false)
@@ -51,14 +51,14 @@ function ItemEl({item, onDelete}) {
     <div>
       <div className="ItemEl Heading">
         <p>{item.name} - ${parseFloat(item.price).toFixed(2)}</p>
-        <p>{item.goal ? `${Math.round(item.goal.percentage)}%` : null}</p>
+        {/* <p>{item.goal ? `${Math.round(item.goal.percentage)}%` : null}</p> */}
         <DeleteBtn onClick={handleDelete} />
       </div>
-      {item.goal ? (
+      {/* {item.goal ? (
         <LinearProgress variant="determinate" value={item.goal.percentage} sx={{height: 12}} />
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   )
 }
