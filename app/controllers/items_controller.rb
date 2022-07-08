@@ -4,9 +4,9 @@ class ItemsController < ApplicationController
   def index
     # items = Item.all
     # items = @current_user.lists.find(params[:list_id]).items.all
-    if params[:list_id]
-      list = List.find(params[:list_id])
-      items = list.items
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      items = user.items
     else
       items = Item.all
     end
@@ -15,15 +15,11 @@ class ItemsController < ApplicationController
 
   def show
     item = Item.find(params[:id])
-    # list = @current_user.lists.find(params[:list_id])
-    # item = list.items.find(params[:id])
-    # item = @current_user.lists.find(params[:list_id]).items.find(params[:id])
     render json: item
   end
 
   def create
-    # item = @current_user.lists.items.create!(item_params)
-    item = @current_user.lists.find(params[:list_id]).items.create!(item_params)
+    item = @current_user.items.create!(item_params)
     # item = Item.create!(item_params)
     render json: item, status: :created
   end
@@ -37,7 +33,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.permit(:name, :price)
+    params.permit(:name, :price, :priority, :user_id, :balance_id)
   end
 
 end

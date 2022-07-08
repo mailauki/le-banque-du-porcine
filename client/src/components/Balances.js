@@ -4,8 +4,8 @@ import AddBtn from './AddBtn';
 import AddBalance from './AddBalance';
 import { ClickAwayListener } from '@mui/material';
 
-function Balances({wallet}) {
-  const [balances, setBalances] = useState([])
+function Balances({user}) {
+  const [balances, setBalances] = useState(user.balances)
   const [open, setOpen] = useState(false)
 
   // useEffect(() => {
@@ -38,25 +38,25 @@ function Balances({wallet}) {
 
   return(
     <ClickAwayListener onClickAway={handleClickAway}>
-      <div className="BalancesContainer">
+      <div className="BalancesContainer box">
         {!open ? (
           <>
-            <div className="Heading">
+            <div className="Heading underline">
               <h4>Balances</h4>
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Balances">
-              {/* {balances.length > 0 ? (
+              {balances.length > 0 ? (
                 balances.map( balance => (
                   <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
                 ) )
               ) : (
                 <></>
-              )} */}
+              )}
             </div>
           </>
         ) : (
-          <AddBalance onSubmit={handleAdd} id={wallet.id} />
+          <AddBalance onSubmit={handleAdd} id={user.id} />
         )}
       </div>
     </ClickAwayListener>

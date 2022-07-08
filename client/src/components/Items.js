@@ -1,20 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ItemEl from './ItemEl';
 import AddBtn from './AddBtn';
 import AddItem from './AddItem';
 import { ClickAwayListener } from '@mui/material';
 
-function Items({list, defaultBalance}) {
-  const [items, setItems] = useState([])
+function Items({user, defaultBalance}) {
+  const [items, setItems] = useState(user.items)
   const [open, setOpen] = useState(false)
-
-  // useEffect(() => {
-  //   if(list) {
-  //     fetch(`users/1/lists/${list.id}/items`)
-  //     .then((r) => r.json())
-  //     .then((data) => setItems(data))
-  //   }
-  // }, [list])
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -27,22 +19,6 @@ function Items({list, defaultBalance}) {
   function handleAdd(newItem) {
     setItems([...items, newItem])
     setOpen(false)
-
-    fetch("/goals", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({item_id: newItem.id, balance_id: defaultBalance.id})
-    })
-    .then((r) => {
-      if (r.ok) {
-        r.json().then((goal) => console.log(goal))
-        // set to state
-      } else {
-        r.json().then((err) => console.log(err.errors))
-      }
-    })
   }
 
   function handleRemove(deletedItem) {
@@ -54,25 +30,25 @@ function Items({list, defaultBalance}) {
 
   return(
     <ClickAwayListener onClickAway={handleClickAway}>
-      <div className="ItemsContainer">
+      <div className="ItemsContainer box">
         {!open ? (
           <>
-            <div className="Heading">
+            <div className="Heading underline">
               <h4>Items</h4>
               <AddBtn onClick={handleClick} />
             </div>
             <div className="Items">
-              {/* {items.length > 0 ? (
+              {items.length > 0 ? (
                 items.map( item => (
                   <ItemEl key={item.id} item={item} onDelete={handleRemove} />
                 ) )
               ) : (
                 <></>
-              )} */}
+              )}
             </div>
           </>
         ) : (
-          <AddItem onSubmit={handleAdd} id={list.id} defaultBalance={defaultBalance} />
+          <AddItem onSubmit={handleAdd} id={user.id} defaultBalance={defaultBalance} />
         )}
       </div>
     </ClickAwayListener>

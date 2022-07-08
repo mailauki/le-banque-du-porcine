@@ -1,9 +1,15 @@
 class BalancesController < ApplicationController
-  skip_before_action :authorize, only: [:show]
+  skip_before_action :authorize, only: [:index, :show]
 
   def index
     # balances = Balance.all
-    balances = @current_user.wallets.find(params[:wallet_id]).balances
+    # balances = @current_user.balances
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      balances = user.balances
+    else
+      balances = Balance.all
+    end
     render json: balances
   end
 
@@ -13,8 +19,8 @@ class BalancesController < ApplicationController
   end
 
   def create
-    balance = @current_user.wallets.find(params[:wallet_id]).balances.create!(balance_params)
-    balance = Balance.create!(balance_params)
+    balance = @current_user.balances.create!(balance_params)
+    # balance = Balance.create!(balance_params)
     render json: balance, status: :created
   end
 

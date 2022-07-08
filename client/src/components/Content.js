@@ -1,6 +1,6 @@
 import logo from '../logo.png';
-// import Wallets from './Wallets';
-// import Lists from './Lists';
+import Items from './Items';
+import Balances from './Balances';
 
 function Content({user, defaultBalance}) {
   return(
@@ -9,13 +9,24 @@ function Content({user, defaultBalance}) {
         <img src={logo} className="App-logo" alt="logo" />
       </div>
       <h1>{user ? `Welcome, ${user.first_name}` : "Nothing here yet"}</h1>
-      {/* <Wallets user={user} />
-      {user ? <Lists user={user} defaultBalance={defaultBalance} /> : <></>} */}
       {console.log(user)}
-      {/* <div>
-        {user.wallets.map( wallet => <p>{`${wallet.name} - $${wallet.total_balance}`}</p>)}
-        <div></div>
-      </div> */}
+      {console.log({defaultBalance})}
+      {user ? (
+        <div>
+          {/* {user.items > 0 ? (
+            user.items.map( item => {
+              // <p>{`${item.name} - $${item.total_balance}`}</p>
+              <p>{`${item.name} - $${parseFloat(item.price).toFixed(2)}`}</p>
+            })
+          ) : (
+            <></>
+          )} */}
+          <Balances user={user} defaultBalance={defaultBalance} />
+          {defaultBalance ? <Items user={user} defaultBalance={defaultBalance} /> : <></>}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }

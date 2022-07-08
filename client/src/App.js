@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 function App() {
   const [user, setUser] = useState(null)
   const [defaultBalance, setDefaultBalance] = useState(null)
+  // const [isLoading, setIsLoading] = useState(false)
   let pathname = useLocation().pathname
 
   useEffect(() => {
@@ -30,23 +31,23 @@ function App() {
   console.log({user})
 
   return (
-      <div className="App">
-        <Header pathname={pathname} user={user} onLogout={setUser} />
+    <div className="App">
+      <Header pathname={pathname} user={user} onLogout={setUser} />
 
-        <div className="Body">
-          <Switch>
-            <Route path="/login">
-              <Login onLogin={setUser} />
-            </Route>
-            <Route path="/signup">
-              <Signup onLogin={setUser} />
-            </Route>
-            <Route path="/">
-              <Home user={user} defaultBalance={defaultBalance} />
-            </Route>
-          </Switch>
-        </div>
+      <div className="Body">
+        <Switch>
+          <Route path="/login">
+            <Login onLogin={setUser} />
+          </Route>
+          <Route path="/signup">
+            <Signup onLogin={setUser} />
+          </Route>
+          <Route path="/">
+            <Home user={user} defaultBalance={defaultBalance} />
+          </Route>
+        </Switch>
       </div>
+    </div>
   );
 }
 

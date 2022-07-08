@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     # resources :goals
     # resources :progresses
   end
-  resources :items_tags
+  resources :balances
+  resources :items
+  resources :item_tags
   resources :tags
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

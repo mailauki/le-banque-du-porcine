@@ -9,7 +9,7 @@ function AddBalance({id, onSubmit}) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    fetch(`/${id}/balances`, {
+    fetch(`/balances`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -29,7 +29,7 @@ function AddBalance({id, onSubmit}) {
   }
 
   return(
-    <div className="AddBalance box">
+    <div className="AddBalance">
       <form className="Form" onSubmit={handleSubmit}>
         <div className="form-input">
           <label>Name</label>
