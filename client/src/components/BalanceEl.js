@@ -1,4 +1,4 @@
-import DeleteBtn from './DeleteBtn';
+import IconBtn from './IconBtn';
 
 function BalanceEl({balance, onDelete}) {
   function handleDelete() {
@@ -17,8 +17,11 @@ function BalanceEl({balance, onDelete}) {
 
   return(
     <div className="BalanceEl Heading">
-      {balance.name} - ${parseFloat(balance.amount).toFixed(2)}
-      <DeleteBtn onClick={handleDelete} />
+      {/* <p>{balance.name} - ${balance.amount.toFixed(2)}</p> */}
+      <p>{balance.name}</p>
+      <p>${balance.amount.toFixed(2)}</p>
+      {/* <DeleteBtn onClick={handleDelete} /> */}
+      <IconBtn onClick={handleDelete} button="Delete" />
     </div>
   )
 }

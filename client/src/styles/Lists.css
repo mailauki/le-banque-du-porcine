@@ -29,3 +29,27 @@
   width: 84%;
   margin: 0;
 } */
+
+.ItemEl {
+  filter: grayscale(1) opacity(90%);
+}
+.ItemEl img {
+  filter: opacity(60%);
+}
+
+.ItemEl:hover, .ItemEl:hover img {
+  filter: none;
+}
+
+.moreEdit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 6px 6px 16px;
+  text-align: left;
+}
+
+.moreInfo p {
+  padding: 0;
+  margin: 0;
+}

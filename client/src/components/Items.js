@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import ItemEl from './ItemEl';
-import AddBtn from './AddBtn';
+import IconBtn from './IconBtn';
 import AddItem from './AddItem';
-import { ClickAwayListener } from '@mui/material';
+import { ClickAwayListener, ImageList, Tooltip } from '@mui/material';
 
 function Items({user, defaultBalance}) {
   const [items, setItems] = useState(user.items)
@@ -36,10 +36,14 @@ function Items({user, defaultBalance}) {
           <>
             <div className="Heading underline">
               <h4>Items</h4>
-              <p>{`Total: $${user.total_cost}`}</p> // try redux here ???
-              <AddBtn onClick={handleClick} />
+              <p>{`Total: $${user.total_cost.toFixed(2)}`}</p>
+              {/* try redux here ??? */}
+              <IconBtn onClick={handleClick} button="Add" />
             </div>
-            <div className="Items">
+            
+            <p style={{textAlign: "left", fontSize: "small"}}>Click for More Info</p>
+            
+            <ImageList gap={10}>
               {items.length > 0 ? (
                 items.map( item => (
                   <ItemEl key={item.id} item={item} onDelete={handleRemove} />
@@ -47,7 +51,7 @@ function Items({user, defaultBalance}) {
               ) : (
                 <></>
               )}
-            </div>
+            </ImageList>
           </>
         ) : (
           <AddItem onSubmit={handleAdd} id={user.id} defaultBalance={defaultBalance} />

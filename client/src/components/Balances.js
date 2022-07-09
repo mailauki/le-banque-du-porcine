@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import BalanceEl from './BalanceEl';
-import AddBtn from './AddBtn';
+import IconBtn from './IconBtn';
 import AddBalance from './AddBalance';
 import { ClickAwayListener } from '@mui/material';
 
@@ -43,8 +43,8 @@ function Balances({user}) {
           <>
             <div className="Heading underline">
               <h4>Balances</h4>
-              <p>{`Total: $${user.total_balance}`}</p>
-              <AddBtn onClick={handleClick} />
+              <p>{`Total: $${user.total_balance.toFixed(2)}`}</p>
+              <IconBtn onClick={handleClick} button="Add" />
             </div>
             <div className="Balances">
               {balances.length > 0 ? (
