@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import DeleteBtn from './DeleteBtn';
 import IconBtn from './IconBtn';
-import { LinearProgress, ImageListItem, ImageListItemBar, Avatar, ClickAwayListener } from '@mui/material';
+import { Avatar, ClickAwayListener, CircularProgress, Box, Fab } from '@mui/material';
 
-function ItemEl({item, onDelete}) {
+function ItemEl({item, onDelete, onEdit}) {
+  const { name, price, priority, percentage, image } = item
   const percent = <Avatar
     sx={{ color: "#000", bgcolor: "rgba(255, 255, 255, 0.54)", marginRight: "6px", padding: "2px", width: 32, height: 32, fontSize: "16px" }}
-  >{`${item.percentage}%`}</Avatar>
+  >{`${percentage}%`}</Avatar>
   const [button, setButton] = useState(percent)
   const [open, setOpen] = useState(false)
+
+  const priorityColor = priority === 1 ? "red" : "gray"
 
   function handleDelete() {
     fetch(`/items/${item.id}`, {
@@ -33,9 +36,11 @@ function ItemEl({item, onDelete}) {
   function handleEdit() {
     console.log("edit")
 
-    fetch(`/items/${item.id}`)
-    .then((r) => r.json())
-    .then((data) => console.log(data))
+    onEdit(item)
+
+    // fetch(`/items/${item.id}`)
+    // .then((r) => r.json())
+    // .then((data) => console.log(data))
   }
 
   function handleClick() {
@@ -46,68 +51,60 @@ function ItemEl({item, onDelete}) {
     setOpen(false)
   }
 
-  const image = 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c'
-
   return(
-    // <div>
-    //   <div className="ItemEl Heading">
-    //     <p>{item.name}</p>
-    //     <p>${item.price.toFixed(2)}</p>
-    //     <p>{item.percentage ? `${Math.round(item.percentage)}%` : null}</p>
-    //     <DeleteBtn onClick={handleDelete} />
-    //   </div>
-    //   {item.percentage ? (
-    //     <LinearProgress variant="determinate" value={item.percentage} sx={{height: 12}} />
-    //   ) : (
-    //     <></>
-    //   )}
-    // </div>
     <ClickAwayListener onClickAway={handleClickAway}>
-      <div className="ItemEl" onClick={handleClick}>
-        <ImageListItem>
-          <img
-            src={`${item.image ? item.image : image}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.image ? item.image : image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.name}
-            loading="lazy"
+      <li className="ItemEl">
+      <Box sx={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        backgroundColor: "rgba(0, 0, 0, 0.15)",
+        borderRadius: "50%", 
+        padding: "2px" 
+      }}>
+        <Box sx={{ m: 1, position: "relative" }}>
+          <Fab
+            aria-label="more"
+            color="#fff"
+            onClick={handleClick}
+            sx={{ width: 152, height: 152 }}
+          >
+            <Avatar alt={name} src={image} sx={{ width: "100%", height: "100%", backgroundColor: "#fff" }} />
+          </Fab>
+          <CircularProgress
+            size={172}
+            variant="determinate"
+            value={percentage}
+            sx={{
+              position: "absolute",
+              top: -10,
+              left: -10,
+              zIndex: 1,
+            }}
           />
-          <ImageListItemBar
-            title={item.name}
-            // subtitle={`$${item.price.toFixed(2)} - #${item.priority}`}
-            actionIcon={
-              <div
-                onMouseEnter={handleHoverOn}
-                onMouseLeave={handleHoverOff}
-              >{button}</div>
-            }
-            sx={{ textAlign: "left" }}
-          />
-        </ImageListItem>
-        <LinearProgress variant="determinate" value={item.percentage} sx={{height: 12}} />
+        </Box>
+      </Box>
         {open ? (
-          <div className="moreEdit">
-            <div className="moreInfo">
-              <p>{`Price: $${item.price.toFixed(2)}`}</p>
-              <p>{`Priority: #${item.priority}`}</p>
+          <div className="moreInfo">
+            <h4>{name}</h4>
+            <div className="moreButtons">
+              <div className="moreInfo">
+                <p>Price: ${price.toFixed(2)}</p>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <p>Priority: </p>
+                  <Avatar sx={{ bgcolor: priorityColor, width: 22, height: 22, fontSize: "12px", marginLeft: "4px" }}>{priority}</Avatar>
+                </div>
+              </div>
+              <div>
+                <IconBtn onClick={handleEdit} button="Edit" />
+                <IconBtn onClick={handleDelete} button="Delete" />
+              </div>
             </div>
-            <IconBtn onClick={handleEdit} button="Edit" />
           </div>
-          // <ImageListItem>
-          //   <ImageListItemBar
-          //   position="below"
-          //   title={`Price: $${item.price.toFixed(2)}`}
-          //   subtitle={`Priority: #${item.priority}`}
-          //   actionIcon={
-          //     <IconBtn onClick={handleEdit} button="Edit" />
-          //     // <DeleteBtn onClick={handleEdit} />
-          //   }
-          //   sx={{ textAlign: "left", padding: "4px 4px 0 14px" }}
-          // />
-          // </ImageListItem>
         ) : (
           <></>
         )}
-      </div>
+      </li>
     </ClickAwayListener>
   )
 }

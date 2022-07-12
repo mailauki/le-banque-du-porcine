@@ -54,3 +54,15 @@
   /* height: 100%; */
   /* margin-left: 10px; */
 }
+
+.AddItem fieldset {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid #222;
+}
+
+.AddItem fieldset div {
+  align-items: center;
+}
