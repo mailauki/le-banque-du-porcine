@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Errors from './Errors';
 
-function EditItem({id, onSubmit, defaultBalance, item, balances}) {
+function EditItem({ id, onSubmit, defaultBalance, item, balances }) {
   const [name, setName] = useState(item.name)
   const [price, setPrice] = useState(item.price)
   const [priority, setPriority] = useState(item.priority)
@@ -9,17 +9,16 @@ function EditItem({id, onSubmit, defaultBalance, item, balances}) {
   // const [balance, setBalance] = useState(item.balance.id)
   const [errors, setErrors] = useState([])
 
-  console.log({id: item.id, name: name, price: price, priority: priority, image: image, balance_id: defaultBalance.id})
+  console.log({id: item.id, name: name, price: parseFloat(price), priority: priority, image: image, balance_id: defaultBalance.id})
 
   function handleSubmit(event) {
     event.preventDefault()
 
     if(defaultBalance) {
-      // let balance_id = item ? balance : defaultBalance.id
-      let formData = {name: name, price: price, priority: priority, image: image, balance_id: defaultBalance.id}
+      let formData = {name: name, price: parseFloat(price), priority: priority, image: image, balance_id: defaultBalance.id}
 
       if(item) {
-        fetch(`/items/${item.id}`, {
+        fetch(`/users/${id}/items/${item.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json"

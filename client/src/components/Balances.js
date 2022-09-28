@@ -1,20 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { balanceAdded, balanceDeleted } from '../features/users/currentUserSlice';
 import BalanceEl from './BalanceEl';
 import IconBtn from './IconBtn';
-import AddBalance from './AddBalance';
+import BalanceForm from './BalanceForm';
 import { ClickAwayListener } from '@mui/material';
 
-function Balances({user}) {
-  const [balances, setBalances] = useState(user.balances)
+function Balances() {
   const [open, setOpen] = useState(false)
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   if(wallet) {
-  //     fetch(`users/1/wallets/${wallet.id}/balances`)
-  //     .then((r) => r.json())
-  //     .then((data) => setBalances(data))
-  //   }
-  // }, [wallet])
+  const { total_balance, balances } = currentUser
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -25,15 +22,12 @@ function Balances({user}) {
   }
 
   function handleAdd(data) {
-    setBalances([...balances, data])
+    dispatch(balanceAdded(data))
     setOpen(false)
   }
 
   function handleRemove(deletedBalance) {
-    const updatedBalances = balances.filter( balance => {
-      if(balance.id !== deletedBalance.id) return balance
-    } )
-    setBalances(updatedBalances)
+    dispatch(balanceDeleted(deletedBalance))
   }
 
   return(
@@ -43,21 +37,21 @@ function Balances({user}) {
           <>
             <div className="Heading underline">
               <h4>Balances</h4>
-              <p>{`Total: $${user.total_balance.toFixed(2)}`}</p>
+              <p>{`Total: $${total_balance ? total_balance.toFixed(2) : 0}`}</p>
               <IconBtn onClick={handleClick} button="Add" />
             </div>
             <div className="Balances">
-              {balances.length > 0 ? (
-                balances.map( balance => (
+              {balances && balances.length > 0 ? (
+                balances.map((balance) => (
                   <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
-                ) )
+                ))
               ) : (
                 <></>
               )}
             </div>
           </>
         ) : (
-          <AddBalance onSubmit={handleAdd} id={user.id} />
+          <BalanceForm onSubmit={handleAdd} id={currentUser.id} />
         )}
       </div>
     </ClickAwayListener>

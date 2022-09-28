@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.Form input, .Form button {
+.Form input, .Form button, .priority {
   border-radius: 5px;
   /* border: none; */
   border: 1px solid #222;

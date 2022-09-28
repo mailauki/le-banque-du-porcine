@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { itemAdded, itemDeleted, itemEdited } from '../features/users/currentUserSlice';
 import ItemEl from './ItemEl';
 import IconBtn from './IconBtn';
-import AddItem from './AddItem';
-import EditItem from './EditItem';
+import ItemForm from './ItemForm';
 import { ClickAwayListener, LinearProgress } from '@mui/material';
 
-function Items({user, defaultBalance}) {
-  const [items, setItems] = useState(user.items)
+function Items() {
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState(null)
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const dispatch = useDispatch()
+
+  const { total_cost, total_percentage, items, default_balance } = currentUser
 
   function handleClick() {
     setOpen((prev) => !prev)
@@ -20,26 +24,17 @@ function Items({user, defaultBalance}) {
   }
 
   function handleAdd(newItem) {
-    setItems([...items, newItem])
+    dispatch(itemAdded(newItem))
     setOpen(false)
-    // try redux here ???
   }
   
   function handleEdit(editedItem) {
-    const updatedItems = items.filter( item => {
-      if(editedItem.id === item.id) return editedItem
-      else return item
-    } )
-    setItems(updatedItems)
+    dispatch(itemEdited(editedItem))
     setOpen(false)
-    // try redux here ???
   }
 
   function handleRemove(deletedItem) {
-    const updatedItems = items.filter( item => {
-      if(item.id !== deletedItem.id) return item
-    } )
-    setItems(updatedItems)
+    dispatch(itemDeleted(deletedItem))
   }
 
   return(
@@ -48,12 +43,12 @@ function Items({user, defaultBalance}) {
         {(() => {
           if(open && !editing) {
             return (
-              <AddItem onSubmit={handleAdd} id={user.id} defaultBalance={defaultBalance} />
+              <ItemForm onSubmit={handleAdd} id={currentUser.id} defaultBalance={default_balance} />
             )
           }
           else if(open && editing) {
             return (
-              <EditItem onSubmit={handleEdit} id={user.id} defaultBalance={defaultBalance} item={editing} balances={user.balances} />
+              <ItemForm onSubmit={handleEdit} id={currentUser.id} item={editing} balances={currentUser.balances} defaultBalance={default_balance} />
             )
           }
           else {
@@ -62,64 +57,36 @@ function Items({user, defaultBalance}) {
                 <div className="underline">
                   <div className="Heading">
                     <h4>Items</h4>
-                    <p>{`Total: $${user.total_cost.toFixed(2)}`}</p>
-                    {/* try redux here ??? */}
+                    <p>{`Total: $${total_cost ? total_cost.toFixed(2) : 0}`}</p>
                     <IconBtn onClick={handleClick} button="Add" />
                   </div>
-                  <LinearProgress variant="determinate" value={user.total_percentage} sx={{height: 12}} />
+                  <LinearProgress variant="determinate" value={total_percentage} sx={{height: 12}} />
                 </div>
 
 
                 <p style={{textAlign: "left", fontSize: "small"}}>Click for More Info</p>
                 
-                {/* <ImageList gap={10} rowHeight={200}> */}
                 <ul className="ItemsList">
-                  {items.length > 0 ? (
-                    items.map( item => (
-                      <ItemEl key={item.id} item={item} onDelete={handleRemove} onEdit={(editingItem) => {
-                        setEditing(editingItem)
-                        setOpen(true)
-                      }} />
-                    ) )
+                  {items && items.length > 0 ? (
+                    items.map((item) => (
+                      <ItemEl 
+                        key={item.id} 
+                        item={item} 
+                        onDelete={handleRemove} 
+                        onEdit={(editingItem) => {
+                          setEditing(editingItem)
+                          setOpen(true)
+                        }} 
+                      />
+                    ))
                   ) : (
                     <></>
                   )}
-                {/* </ImageList> */}
                 </ul>
               </>
             )
           }
         })()}
-        {/* {!open ? (
-          <>
-            <div className="Heading underline">
-              <h4>Items</h4>
-              <p>{`Total: $${user.total_cost.toFixed(2)}`}</p>
-              <IconBtn onClick={handleClick} button="Add" />
-            </div>
-
-            <p style={{textAlign: "left", fontSize: "small"}}>Click for More Info</p>
-            
-            <ImageList gap={10}>
-              {items.length > 0 ? (
-                items.map( item => (
-                  <ItemEl key={item.id} item={item} onDelete={handleRemove} onEdit={(bool) => {
-                    setEditing(bool)
-                    setOpen(bool)
-                  }} />
-                ) )
-              ) : (
-                <></>
-              )}
-            </ImageList>
-          </>
-        ) : (
-          editing && open ? (
-            <EditItem onSubmit={handleAdd} id={user.id} defaultBalance={defaultBalance} />
-          ) : (
-            <AddItem onSubmit={handleAdd} id={user.id} defaultBalance={defaultBalance} />
-          )
-        )} */}
       </div>
     </ClickAwayListener>
   )

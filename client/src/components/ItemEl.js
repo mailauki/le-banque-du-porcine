@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import DeleteBtn from './DeleteBtn';
 import IconBtn from './IconBtn';
-import { Avatar, ClickAwayListener, CircularProgress, Box, Fab } from '@mui/material';
+import { Avatar, ClickAwayListener, CircularProgress, Box, Fab, Typography } from '@mui/material';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import Looks3Icon from '@mui/icons-material/Looks3';
 
-function ItemEl({item, onDelete, onEdit}) {
+function ItemEl({ item, onDelete, onEdit }) {
   const { name, price, priority, percentage, image } = item
   const percent = <Avatar
     sx={{ color: "#000", bgcolor: "rgba(255, 255, 255, 0.54)", marginRight: "6px", padding: "2px", width: 32, height: 32, fontSize: "16px" }}
@@ -12,6 +15,12 @@ function ItemEl({item, onDelete, onEdit}) {
   const [open, setOpen] = useState(false)
 
   const priorityColor = priority === 1 ? "red" : "gray"
+
+  const customIcons = {
+    1: <LooksOneIcon color="error" />,
+    2: <LooksTwoIcon color="warning" />,
+    3: <Looks3Icon color="success" />,
+  }
 
   function handleDelete() {
     fetch(`/items/${item.id}`, {
@@ -91,8 +100,8 @@ function ItemEl({item, onDelete, onEdit}) {
               <div className="moreInfo">
                 <p>Price: ${price.toFixed(2)}</p>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <p>Priority: </p>
-                  <Avatar sx={{ bgcolor: priorityColor, width: 22, height: 22, fontSize: "12px", marginLeft: "4px" }}>{priority}</Avatar>
+                <Typography variant="body2" component="span">Priority: </Typography>
+                <span>{customIcons[priority]}</span>
                 </div>
               </div>
               <div>

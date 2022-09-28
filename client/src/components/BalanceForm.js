@@ -9,7 +9,7 @@ function AddBalance({id, onSubmit}) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    fetch(`/balances`, {
+    fetch(`/users/${id}/balances`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

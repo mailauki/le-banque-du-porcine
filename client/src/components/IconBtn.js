@@ -3,7 +3,7 @@ import { Add, Clear, Delete, Edit } from '@mui/icons-material';
 
 function IconBtn({onClick, button}) {
   return(
-    <Tooltip title={button}>
+    <Tooltip title={button} arrow>
       <IconButton
         onClick={onClick}
         id="button"
