@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers } from '../features/users/usersSlice';
 import { fetchCurrentUser } from '../features/users/currentUserSlice';
@@ -6,18 +6,21 @@ import { balanceAdded, balanceDeleted } from '../features/users/currentUserSlice
 import logo from '../logo.png';
 import Items from './Items';
 import Balances from './Balances';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 
-function Content({user, defaultBalance}) {
-  // const users = useSelector((state) => state.users.entities)
+function Content({ user, defaultBalance }) {
   const currentUser = useSelector((state) => state.currentUser.entities)
   const dispatch = useDispatch()
+  const [toggle, setToggle] = useState("items")
+
+  const handleChange = (event, newValue) => {
+    setToggle(newValue)
+  }
 
   useEffect(() => {
-    // dispatch(fetchUsers())
     dispatch(fetchCurrentUser())
   }, [dispatch])
 
-  // console.log({users})
   console.log({currentUser})
 
   function handleBalanceAdd() {
@@ -26,14 +29,35 @@ function Content({user, defaultBalance}) {
 
   return(
     <div className="Content">
-      {!user ? <div className="App-header">
+      {!currentUser ? <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </div> : <></>}
-      <h1>{user ? `Welcome, ${currentUser.first_name}` : "Nothing here yet"}</h1>
-      {/* {console.log(user)}
-      {console.log({defaultBalance})} */}
-      <Balances />
-      <Items />
+      <h1>{currentUser ? `Welcome, ${currentUser.first_name}` : "Nothing here yet"}</h1>
+      <ToggleButtonGroup
+        color="primary"
+        value={toggle}
+        exclusive
+        onChange={handleChange}
+        aria-label="ToggleView"
+      >
+        <ToggleButton value="balances">Balances</ToggleButton>
+        <ToggleButton value="items">Items</ToggleButton>
+        <ToggleButton value="both">Both</ToggleButton>
+      </ToggleButtonGroup>
+      {(() => {
+        switch(toggle) {
+          case "balances": 
+            return <Balances />
+          case "items":
+            return <Items />
+          case "both":
+            return <><Balances /><Items /></>
+          default:
+            return <><Balances /><Items /></>
+        }
+      })()}
+      {/* <Balances />
+      <Items /> */}
       {/* {user ? (
         <div>
           <Balances user={user} defaultBalance={defaultBalance} />
