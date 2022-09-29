@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import Errors from '../components/Errors';
 
-function Signup({onLogin}) {
+function Signup({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -12,7 +12,9 @@ function Signup({onLogin}) {
 
   function handleSubmit(e) {
     e.preventDefault()
+
     setErrors([])
+
     fetch("/signup", {
       method: "POST",
       headers: {
@@ -23,7 +25,7 @@ function Signup({onLogin}) {
       .then((r) => {
         if (r.ok) {
           r.json().then((user) => onLogin(user))
-          history.push("/me")
+          // history.push("/me")
         } else {
           r.json().then((err) => setErrors(err.errors))
         }
@@ -38,10 +40,10 @@ function Signup({onLogin}) {
           <label>Username</label>
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
-        <div className="form-input">
+        {/* <div className="form-input">
           <label>First Name</label>
           <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        </div>
+        </div> */}
         <div className="form-input">
           <label>Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />

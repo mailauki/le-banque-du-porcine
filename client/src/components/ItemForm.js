@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, Rating } from '@mui/material';
+import { Typography, Rating, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
@@ -90,6 +90,7 @@ function ItemForm({ id, onSubmit, defaultBalance, item }) {
         }
       })
     }
+    else setErrors([...errors, "Must have at least one balance"])
   }
 
   return(

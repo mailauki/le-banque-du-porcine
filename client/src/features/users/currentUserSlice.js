@@ -4,12 +4,21 @@ export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", () =>
   return fetch("/me")
     .then((r) => r.json())
     .then((data) => data)
+    // .then((r) => {
+    //   if (r.ok) {
+    //     r.json().then((data) => {
+    //       return data
+    //     })
+    //   } else {
+    //     return null
+    //   }
+    // })
 })
 
 const currentUserSlice = createSlice({
-  name: 'currentUser',
+  name: "currentUser",
   initialState: {
-    entities: [],
+    entities: null,
     status: "idle"
   },
   reducers: {
@@ -19,6 +28,8 @@ const currentUserSlice = createSlice({
       currentUser.balances.push(action.payload)
 
       currentUser.total_balance += action.payload.amount
+
+      currentUser.default_balance = currentUser.balances[0]
     },
     balanceDeleted(state, action) {
       const currentUser = state.entities
@@ -27,6 +38,10 @@ const currentUserSlice = createSlice({
       currentUser.balances.splice(index, 1)
 
       currentUser.total_balance -= action.payload.amount
+
+      if(!currentUser.balances[0]) {
+        currentUser.default_balance = null
+      }
     },
     itemAdded(state, action) {
       const currentUser = state.entities
@@ -34,6 +49,8 @@ const currentUserSlice = createSlice({
       currentUser.items.push(action.payload)
 
       currentUser.total_cost += action.payload.price
+
+      currentUser.total_percentage = Math.round(currentUser.total_balance / currentUser.total_cost * 100)
     },
     itemDeleted(state, action) {
       const currentUser = state.entities
@@ -42,6 +59,8 @@ const currentUserSlice = createSlice({
       currentUser.items.splice(index, 1)
 
       currentUser.total_cost -= action.payload.price
+
+      currentUser.total_percentage = Math.round(currentUser.total_balance / currentUser.total_cost * 100)
     },
     itemEdited(state, action) {
       const currentUser = state.entities
@@ -53,6 +72,8 @@ const currentUserSlice = createSlice({
       currentUser.items.splice(index, 1, action.payload)
 
       currentUser.total_cost += action.payload.price
+
+      currentUser.total_percentage = Math.round(currentUser.total_balance / currentUser.total_cost * 100)
     }
   },
   extraReducers: {
@@ -61,7 +82,14 @@ const currentUserSlice = createSlice({
     },
     [fetchCurrentUser.fulfilled](state, action) {
       state.entities = action.payload
-      state.entities = {...state.entities, default_balance: state.entities.balances[0]}
+
+      if(state.entities.balances[0]) {
+        state.entities = {...state.entities, default_balance: state.entities.balances[0]}
+      }
+      else {
+        state.entities = {...state.entities, default_balance: null}
+      }
+
       state.status = "idle"
     }
   }

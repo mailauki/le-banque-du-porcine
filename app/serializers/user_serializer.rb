@@ -16,7 +16,8 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def total_percentage
-    (self.total_balance / self.total_cost * 100).round if self.total_balance && self.total_cost
+    # (self.total_balance / self.total_cost * 100).round if self.total_balance && self.total_cost
+    self.total_balance != 0 && self.total_cost != 0 ? (self.total_balance / self.total_cost * 100).round : 0
   end
 
   has_many :balances

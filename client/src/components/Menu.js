@@ -33,7 +33,7 @@ function AccountMenu({user, onLogout}) {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account Settings">
+        <Tooltip title="Account Settings" arrow>
           <IconButton
             onClick={handleClick}
             size="small"
