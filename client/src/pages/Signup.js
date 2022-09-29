@@ -22,14 +22,14 @@ function Signup({ onLogin }) {
       },
       body: JSON.stringify({username: username, password: password, password_confirmation: passwordConfirmation, first_name: firstName})
     })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => onLogin(user))
-          // history.push("/me")
-        } else {
-          r.json().then((err) => setErrors(err.errors))
-        }
-      })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((user) => onLogin(user))
+        // history.push("/me")
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      }
+    })
   }
 
   return(
@@ -40,10 +40,10 @@ function Signup({ onLogin }) {
           <label>Username</label>
           <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
-        {/* <div className="form-input">
+        <div className="form-input">
           <label>First Name</label>
           <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        </div> */}
+        </div>
         <div className="form-input">
           <label>Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />

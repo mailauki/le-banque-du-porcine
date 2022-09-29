@@ -1,17 +1,20 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCurrentUser, logout } from '../features/users/currentUserSlice';
 import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip } from '@mui/material';
 import { Logout } from '@mui/icons-material';
 
 function AccountMenu({user, onLogout}) {
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const open = Boolean(anchorEl)
+  const [anchor, setAnchor] = useState(null)
+  const open = Boolean(anchor)
+  const dispatch = useDispatch()
 
   function handleClick(event) {
-    setAnchorEl(event.currentTarget)
+    setAnchor(event.currentTarget)
   }
   
   function handleClose () {
-    setAnchorEl(null);
+    setAnchor(null)
   }
 
   let letter = user ? user.username.charAt(0).toUpperCase() : ""
@@ -22,16 +25,18 @@ function AccountMenu({user, onLogout}) {
     fetch("/logout", {
       method: "DELETE"
     })
-      .then((r) => {
-        if(r.ok) {
-          onLogout(null)
-          // history.push("/")
-        }
-      })
+    .then((r) => {
+      if(r.ok) {
+        onLogout(null)
+        // history.push("/")
+      }
+    })
+
+    dispatch(logout())
   }
 
   return (
-    <React.Fragment>
+    <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account Settings" arrow>
           <IconButton
@@ -47,7 +52,7 @@ function AccountMenu({user, onLogout}) {
         </Tooltip>
       </Box>
       <Menu
-        anchorEl={anchorEl}
+        anchorEl={anchor}
         id="account-menu"
         open={open}
         onClose={handleClose}
@@ -107,7 +112,7 @@ function AccountMenu({user, onLogout}) {
           Logout
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   )
 }
 

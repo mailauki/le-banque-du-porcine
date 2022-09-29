@@ -6,20 +6,67 @@ export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", () =>
     .then((data) => data)
     // .then((r) => {
     //   if (r.ok) {
-    //     r.json().then((data) => {
-    //       return data
-    //     })
+    //     r.json().then((user) => user)
     //   } else {
-    //     return null
+    //     r.json().then((err) => err.errors)
     //   }
     // })
+})
+
+// export const signup = createAsyncThunk("users/signup", ({username: username, password: password, password_confirmation: passwordConfirmation, first_name: firstName}) => {
+//   return fetch("/signup", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({username: username, password: password, password_confirmation: passwordConfirmation, first_name: firstName})
+//   })
+//   .then((r) => {
+//     if (r.ok) {
+//       r.json().then((user) => user)
+//     } else {
+//       r.json().then((err) => err.errors)
+//     }
+//   })
+// })
+
+// export const login = createAsyncThunk("users/login", ({username: username, password: password}) => {
+//   return fetch("/login", {
+//     method: "POST",
+//     headers:{
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({username: username, password: password})
+//   })
+//   .then((r) => {
+//     if (r.ok) {
+//       r.json().then((user) => user)
+//     } else {
+//       r.json().then((err) => err.errors)
+//     }
+//   })
+// })
+
+export const logout = createAsyncThunk("users/logout", () => {
+  return fetch("/logout", {
+    method: "DELETE"
+  })
+  .then((r) => r.json())
+  .then(() => null)
+  // .then((r) => {
+  //   if(r.ok) {
+  //     null
+  //   }
+  // })
 })
 
 const currentUserSlice = createSlice({
   name: "currentUser",
   initialState: {
     entities: null,
-    status: "idle"
+    status: "idle",
+    isLoggedIn: false,
+    errors: null,
   },
   reducers: {
     balanceAdded(state, action) {
@@ -79,19 +126,59 @@ const currentUserSlice = createSlice({
   extraReducers: {
     [fetchCurrentUser.pending](state) {
       state.status = "loading"
+      state.isLoggedIn = false
     },
     [fetchCurrentUser.fulfilled](state, action) {
-      state.entities = action.payload
+      // state.errors = action.payload.errors ? action.payload.errors : null
+      // state.entities = action.payload.errors ? null : action.payload
 
-      if(state.entities.balances[0]) {
-        state.entities = {...state.entities, default_balance: state.entities.balances[0]}
+      if(action.payload.errors) {
+        state.entities = null
+        state.errors = action.payload.errors
       }
       else {
-        state.entities = {...state.entities, default_balance: null}
+        if(action.payload.balances) {
+          state.entities = {...action.payload, default_balance: action.payload.balances[0]}
+        }
+        else {
+          state.entities = {...action.payload, default_balance: null}
+        }
+        state.errors = null
+        state.isLoggedIn = true
       }
 
+      // if(state.entities && state.entities.balances) {
+      //   state.entities = {...state.entities, default_balance: state.entities.balances[0]}
+      // }
+      // else {
+      //   state.entities = {...state.entities, default_balance: null}
+      // }
+
       state.status = "idle"
-    }
+    },
+    // [fetchCurrentUser.rejected](state, action) {
+    //   state.entities = null
+    //   state.status = "idle"
+    //   state.isLoggedIn = false
+    // },
+    // [signup.fulfilled](state, action) {
+    //   state.isLoggedIn = false
+    // },
+    // [signup.rejected](state, action) {
+    //   state.isLoggedIn = false
+    // },
+    // [login.fulfilled](state, action) {
+    //   state.isLoggedIn = true
+    //   state.entities = action.payload
+    // },
+    // [login.rejected](state, action) {
+    //   state.isLoggedIn = false
+    //   state.entities = null
+    // },
+    [logout.fulfilled](state) {
+      state.isLoggedIn = false
+      state.entities = null
+    },
   }
 })
 

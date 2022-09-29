@@ -5,6 +5,8 @@ import './styles/Form.css';
 import './styles/Lists.css';
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCurrentUser, logout } from './features/users/currentUserSlice'
 import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -13,8 +15,16 @@ import Signup from './pages/Signup';
 function App() {
   const [user, setUser] = useState(null)
   const [defaultBalance, setDefaultBalance] = useState(null)
-  // const [isLoading, setIsLoading] = useState(false)
   let pathname = useLocation().pathname
+
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const isLoggedIn = useSelector((state) => state.currentUser.isLoggedIn)
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state.currentUser)
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser())
+  }, [dispatch])
 
   useEffect(() => {
     fetch("/me")
@@ -32,7 +42,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header pathname={pathname} user={user} onLogout={setUser} />
+      <Header pathname={pathname} user={user} onLogout={(log) => {
+        setUser(log)
+        dispatch(logout())
+        }} />
 
       <div className="Body">
         <Switch>

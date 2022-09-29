@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers } from '../features/users/usersSlice';
-import { fetchCurrentUser } from '../features/users/currentUserSlice';
-import { balanceAdded, balanceDeleted } from '../features/users/currentUserSlice';
+import { fetchCurrentUser, login } from '../features/users/currentUserSlice';
 import logo from '../logo.png';
 import Items from './Items';
 import Balances from './Balances';
@@ -10,8 +8,10 @@ import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 
 function Content({ user, defaultBalance }) {
   const currentUser = useSelector((state) => state.currentUser.entities)
+  const isLoggedIn = useSelector((state) => state.currentUser.isLoggedIn)
   const dispatch = useDispatch()
   const [toggle, setToggle] = useState("both")
+  const state = useSelector((state) => state.currentUser)
 
   const handleChange = (event, newValue) => {
     setToggle(newValue)
@@ -21,11 +21,13 @@ function Content({ user, defaultBalance }) {
     dispatch(fetchCurrentUser())
   }, [dispatch])
 
-  console.log({currentUser})
+  // console.log({currentUser})
+  console.log({user})
+  console.log(state)
 
   return(
     <div className="Content">
-      {!currentUser ? (
+      {!isLoggedIn ? (
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </div>
