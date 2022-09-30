@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { balanceAdded, balanceDeleted } from '../features/users/currentUserSlice';
+import { balanceAdded, balanceDeleted, balanceEdited } from '../features/users/currentUserSlice';
 import BalanceEl from './BalanceEl';
 import IconBtn from './IconBtn';
 import BalanceForm from './BalanceForm';
@@ -8,6 +8,7 @@ import { ClickAwayListener } from '@mui/material';
 
 function Balances() {
   const [open, setOpen] = useState(false)
+  const [editing, setEditing] = useState(null)
   const currentUser = useSelector((state) => state.currentUser.entities)
   const dispatch = useDispatch()
 
@@ -26,6 +27,11 @@ function Balances() {
     setOpen(false)
   }
 
+  function handleEdit(editedBalance) {
+    dispatch(balanceEdited(editedBalance))
+    setOpen(false)
+  }
+
   function handleRemove(deletedBalance) {
     dispatch(balanceDeleted(deletedBalance))
   }
@@ -33,7 +39,53 @@ function Balances() {
   return(
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className="BalancesContainer box">
-        {!open ? (
+      {(() => {
+        if(open && !editing) {
+          return (
+            // <ItemForm onSubmit={handleAdd} id={currentUser.id} defaultBalance={default_balance} />
+            <BalanceForm onSubmit={handleAdd} id={currentUser.id} />
+          )
+        }
+        else if(open && editing) {
+          return (
+            // <ItemForm onSubmit={handleEdit} id={currentUser.id} item={editing} balances={currentUser.balances} defaultBalance={default_balance} />
+            <BalanceForm onSubmit={handleEdit} id={currentUser.id} balance={editing} />
+          )
+        }
+        else
+          return (
+            <>
+              <div className="Heading underline">
+                <h4>Balances</h4>
+                <p>{`Total: $${total_balance ? total_balance.toFixed(2) : 0}`}</p>
+                <IconBtn onClick={handleClick} button="Add" />
+              </div>
+              <div className="Balances">
+                {balances && balances.length > 0 ? (
+                  balances.map((balance) => (
+                    <BalanceEl 
+                      key={balance.id} 
+                      balance={balance} 
+                      onDelete={handleRemove} 
+                      // onEdit={(edit) => {
+                      //   setEditBalance(edit)
+                      //   handleClick()
+                      //   console.log(edit)
+                      // }} 
+                      onEdit={(editingItem) => {
+                        setEditing(editingItem)
+                        setOpen(true)
+                      }} 
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+              </div>
+            </>
+          )
+      })()}
+        {/* {!open ? (
           <>
             <div className="Heading underline">
               <h4>Balances</h4>
@@ -43,7 +95,11 @@ function Balances() {
             <div className="Balances">
               {balances && balances.length > 0 ? (
                 balances.map((balance) => (
-                  <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} />
+                  <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} onEdit={(edit) => {
+                    setEditBalance(edit)
+                    handleClick()
+                    console.log(edit)
+                  }} />
                 ))
               ) : (
                 <></>
@@ -51,8 +107,8 @@ function Balances() {
             </div>
           </>
         ) : (
-          <BalanceForm onSubmit={handleAdd} id={currentUser.id} />
-        )}
+          <BalanceForm onSubmit={handleAdd} id={currentUser.id} balance={editBalance} />
+        )} */}
       </div>
     </ClickAwayListener>
   )

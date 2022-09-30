@@ -1,25 +1,44 @@
 import { useState } from "react";
 import Errors from './Errors';
 
-function AddBalance({id, onSubmit}) {
-  const [name, setName] = useState("")
-  const [amount, setAmount] = useState(0)
+function AddBalance({ id, onSubmit, balance }) {
+  const [name, setName] = useState(balance ? balance.name : "")
+  const [amount, setAmount] = useState(balance? balance.amount : 0)
   const [errors, setErrors] = useState([])
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    fetch(`/users/${id}/balances`, {
+    let formData = {name: name, amount: amount}
+
+    if(balance) {
+      fetch(`/users/${id}/balances/${balance.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            onSubmit(data)
+          })
+        } else {
+          r.json().then((err) => setErrors(err.errors))
+        }
+      })
+    }
+    else fetch(`/users/${id}/balances`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({name: name, amount: amount})
+      body: JSON.stringify(formData)
     })
     .then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          console.log(data)
           onSubmit(data)
         })
       } else {

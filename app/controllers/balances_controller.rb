@@ -24,6 +24,12 @@ class BalancesController < ApplicationController
     render json: balance, status: :created
   end
 
+  def update
+    balance = Balance.find(params[:id])
+    balance.update!(balance_params)
+    render json: balance
+  end
+
   def destroy
     balance = Balance.find(params[:id])
     balance.destroy

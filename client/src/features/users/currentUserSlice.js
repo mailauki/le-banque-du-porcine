@@ -90,6 +90,19 @@ const currentUserSlice = createSlice({
         currentUser.default_balance = null
       }
     },
+    balanceEdited(state, action) {
+      const currentUser = state.entities
+
+      const index = currentUser.balances.findIndex((balance) => balance.id === action.payload.id)
+      
+      currentUser.total_balance -= currentUser.balances[index].amount
+
+      currentUser.balances.splice(index, 1, action.payload)
+      
+      currentUser.total_balance += action.payload.amount
+
+      currentUser.total_percentage = Math.round(currentUser.total_balance / currentUser.total_cost * 100)
+    },
     itemAdded(state, action) {
       const currentUser = state.entities
 
@@ -182,5 +195,5 @@ const currentUserSlice = createSlice({
   }
 })
 
-export const { balanceAdded, balanceDeleted, itemAdded, itemDeleted, itemEdited } = currentUserSlice.actions
+export const { balanceAdded, balanceDeleted, balanceEdited, itemAdded, itemDeleted, itemEdited } = currentUserSlice.actions
 export default currentUserSlice.reducer

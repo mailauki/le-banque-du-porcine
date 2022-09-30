@@ -1,6 +1,8 @@
 import IconBtn from './IconBtn';
+import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
-function BalanceEl({balance, onDelete}) {
+function BalanceEl({ balance, onDelete, onEdit }) {
   function handleDelete() {
     console.log({balance})
 
@@ -15,13 +17,19 @@ function BalanceEl({balance, onDelete}) {
     })
   }
 
+  function handleEdit() {
+    onEdit(balance)
+  }
+
   return(
     <div className="BalanceEl Heading">
-      {/* <p>{balance.name} - ${balance.amount.toFixed(2)}</p> */}
       <p>{balance.name}</p>
       <p>${balance.amount.toFixed(2)}</p>
-      {/* <DeleteBtn onClick={handleDelete} /> */}
-      <IconBtn onClick={handleDelete} button="Delete" />
+      <div>
+        {/* <Button onClick={handleEdit} variant="outlined" size="small" startIcon={<AddIcon />}>$10</Button> */}
+        <IconBtn onClick={handleEdit} button="Edit" />
+        <IconBtn onClick={handleDelete} button="Delete" />
+      </div>
     </div>
   )
 }
