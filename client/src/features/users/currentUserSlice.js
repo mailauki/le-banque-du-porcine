@@ -4,13 +4,6 @@ export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", () =>
   return fetch("/me")
     .then((r) => r.json())
     .then((data) => data)
-    // .then((r) => {
-    //   if (r.ok) {
-    //     r.json().then((user) => user)
-    //   } else {
-    //     r.json().then((err) => err.errors)
-    //   }
-    // })
 })
 
 // export const signup = createAsyncThunk("users/signup", ({username: username, password: password, password_confirmation: passwordConfirmation, first_name: firstName}) => {
@@ -53,11 +46,6 @@ export const logout = createAsyncThunk("users/logout", () => {
   })
   .then((r) => r.json())
   .then(() => null)
-  // .then((r) => {
-  //   if(r.ok) {
-  //     null
-  //   }
-  // })
 })
 
 const currentUserSlice = createSlice({
@@ -134,6 +122,10 @@ const currentUserSlice = createSlice({
       currentUser.total_cost += action.payload.price
 
       currentUser.total_percentage = Math.round(currentUser.total_balance / currentUser.total_cost * 100)
+    },
+    editPreset(state, action) {
+      const currentUser = state.entities
+      currentUser.preset = action.payload
     }
   },
   extraReducers: {
@@ -142,8 +134,6 @@ const currentUserSlice = createSlice({
       state.isLoggedIn = false
     },
     [fetchCurrentUser.fulfilled](state, action) {
-      // state.errors = action.payload.errors ? action.payload.errors : null
-      // state.entities = action.payload.errors ? null : action.payload
 
       if(action.payload.errors) {
         state.entities = null
@@ -151,21 +141,14 @@ const currentUserSlice = createSlice({
       }
       else {
         if(action.payload.balances) {
-          state.entities = {...action.payload, default_balance: action.payload.balances[0]}
+          state.entities = {...action.payload, default_balance: action.payload.balances[0], preset: 10}
         }
         else {
-          state.entities = {...action.payload, default_balance: null}
+          state.entities = {...action.payload, default_balance: null, preset: 10}
         }
         state.errors = null
         state.isLoggedIn = true
       }
-
-      // if(state.entities && state.entities.balances) {
-      //   state.entities = {...state.entities, default_balance: state.entities.balances[0]}
-      // }
-      // else {
-      //   state.entities = {...state.entities, default_balance: null}
-      // }
 
       state.status = "idle"
     },
@@ -195,5 +178,5 @@ const currentUserSlice = createSlice({
   }
 })
 
-export const { balanceAdded, balanceDeleted, balanceEdited, itemAdded, itemDeleted, itemEdited } = currentUserSlice.actions
+export const { balanceAdded, balanceDeleted, balanceEdited, itemAdded, itemDeleted, itemEdited, editPreset } = currentUserSlice.actions
 export default currentUserSlice.reducer

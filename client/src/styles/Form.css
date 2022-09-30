@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.Form input, .Form button, .priority {
+.Form .form-input input, .Form button, .priority {
   border-radius: 5px;
   /* border: none; */
   border: 1px solid #222;
@@ -59,10 +59,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid #222;
 }
 
 .AddItem fieldset div {
   align-items: center;
 }
+
+/* label.Mui-focused {
+  color: 'green',
+}
+
+.MuiInput-underline:after {
+  borderBottomColor: green;
+}
+
+.MuiOutlinedInput-root {
+  fieldset {
+    borderColor: red;
+  },
+  :hover fieldset {
+    borderColor: yellow;
+  },
+  .Mui-focused fieldset {
+    borderColor: green;
+  },
+} */

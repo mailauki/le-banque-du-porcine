@@ -11,6 +11,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -20,7 +21,6 @@ function App() {
   const currentUser = useSelector((state) => state.currentUser.entities)
   const isLoggedIn = useSelector((state) => state.currentUser.isLoggedIn)
   const dispatch = useDispatch()
-  const state = useSelector((state) => state.currentUser)
 
   useEffect(() => {
     dispatch(fetchCurrentUser())
@@ -38,8 +38,6 @@ function App() {
       })
   }, [])
 
-  // console.log({user})
-
   return (
     <div className="App">
       <Header pathname={pathname} user={user} onLogout={(log) => {
@@ -54,6 +52,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <Signup onLogin={setUser} />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route path="/">
             <Home user={user} defaultBalance={defaultBalance} />

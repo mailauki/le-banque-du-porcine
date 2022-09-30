@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCurrentUser, logout } from '../features/users/currentUserSlice';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip } from '@mui/material';
 import { Logout } from '@mui/icons-material';
 
 function AccountMenu({user, onLogout}) {
   const [anchor, setAnchor] = useState(null)
   const open = Boolean(anchor)
-  const dispatch = useDispatch()
 
   function handleClick(event) {
     setAnchor(event.currentTarget)
@@ -28,11 +26,8 @@ function AccountMenu({user, onLogout}) {
     .then((r) => {
       if(r.ok) {
         onLogout(null)
-        // history.push("/")
       }
     })
-
-    dispatch(logout())
   }
 
   return (
@@ -86,25 +81,10 @@ function AccountMenu({user, onLogout}) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem sx={{color: "#222"}}>
+        <MenuItem sx={{color: "#222"}} component={Link} to="/profile">
           <Avatar /> Profile
         </MenuItem>
-        {/* <MenuItem>
-          <Avatar /> My Account
-        </MenuItem> */}
         <Divider />
-        {/* <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add Another Account
-        </MenuItem> */}
-        {/* <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem> */}
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

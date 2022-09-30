@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCurrentUser, login } from '../features/users/currentUserSlice';
+import { fetchCurrentUser } from '../features/users/currentUserSlice';
 import logo from '../logo.png';
 import Items from './Items';
 import Balances from './Balances';
@@ -11,7 +11,6 @@ function Content({ user, defaultBalance }) {
   const isLoggedIn = useSelector((state) => state.currentUser.isLoggedIn)
   const dispatch = useDispatch()
   const [toggle, setToggle] = useState("both")
-  const state = useSelector((state) => state.currentUser)
 
   const handleChange = (event, newValue) => {
     setToggle(newValue)
@@ -20,10 +19,6 @@ function Content({ user, defaultBalance }) {
   useEffect(() => {
     dispatch(fetchCurrentUser())
   }, [dispatch])
-
-  // console.log({currentUser})
-  console.log({user})
-  console.log(state)
 
   return(
     <div className="Content">

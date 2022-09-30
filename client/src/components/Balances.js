@@ -39,76 +39,46 @@ function Balances() {
   return(
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className="BalancesContainer box">
-      {(() => {
-        if(open && !editing) {
-          return (
-            // <ItemForm onSubmit={handleAdd} id={currentUser.id} defaultBalance={default_balance} />
-            <BalanceForm onSubmit={handleAdd} id={currentUser.id} />
-          )
-        }
-        else if(open && editing) {
-          return (
-            // <ItemForm onSubmit={handleEdit} id={currentUser.id} item={editing} balances={currentUser.balances} defaultBalance={default_balance} />
-            <BalanceForm onSubmit={handleEdit} id={currentUser.id} balance={editing} />
-          )
-        }
-        else
-          return (
-            <>
-              <div className="Heading underline">
-                <h4>Balances</h4>
-                <p>{`Total: $${total_balance ? total_balance.toFixed(2) : 0}`}</p>
-                <IconBtn onClick={handleClick} button="Add" />
-              </div>
-              <div className="Balances">
-                {balances && balances.length > 0 ? (
-                  balances.map((balance) => (
-                    <BalanceEl 
-                      key={balance.id} 
-                      balance={balance} 
-                      onDelete={handleRemove} 
-                      // onEdit={(edit) => {
-                      //   setEditBalance(edit)
-                      //   handleClick()
-                      //   console.log(edit)
-                      // }} 
-                      onEdit={(editingItem) => {
-                        setEditing(editingItem)
-                        setOpen(true)
-                      }} 
-                    />
-                  ))
-                ) : (
-                  <></>
-                )}
-              </div>
-            </>
-          )
-      })()}
-        {/* {!open ? (
-          <>
-            <div className="Heading underline">
-              <h4>Balances</h4>
-              <p>{`Total: $${total_balance ? total_balance.toFixed(2) : 0}`}</p>
-              <IconBtn onClick={handleClick} button="Add" />
-            </div>
-            <div className="Balances">
-              {balances && balances.length > 0 ? (
-                balances.map((balance) => (
-                  <BalanceEl key={balance.id} balance={balance} onDelete={handleRemove} onEdit={(edit) => {
-                    setEditBalance(edit)
-                    handleClick()
-                    console.log(edit)
-                  }} />
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
-          </>
-        ) : (
-          <BalanceForm onSubmit={handleAdd} id={currentUser.id} balance={editBalance} />
-        )} */}
+        {(() => {
+          if(open && !editing) {
+            return (
+              <BalanceForm onSubmit={handleAdd} id={currentUser.id} />
+            )
+          }
+          else if(open && editing) {
+            return (
+              <BalanceForm onSubmit={handleEdit} id={currentUser.id} balance={editing} />
+            )
+          }
+          else {
+            return (
+              <>
+                <div className="Heading underline">
+                  <h4>Balances</h4>
+                  <p>{`Total: $${total_balance ? total_balance.toFixed(2) : 0}`}</p>
+                  <IconBtn onClick={handleClick} button="Add" />
+                </div>
+                <div className="Balances">
+                  {balances && balances.length > 0 ? (
+                    balances.map((balance) => (
+                      <BalanceEl 
+                        key={balance.id} 
+                        balance={balance} 
+                        onDelete={handleRemove} 
+                        onEdit={(editingItem) => {
+                          setEditing(editingItem)
+                          setOpen(true)
+                        }} 
+                      />
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </>
+            )
+          }
+        })()}
       </div>
     </ClickAwayListener>
   )

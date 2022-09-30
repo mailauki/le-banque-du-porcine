@@ -3,12 +3,12 @@ import { useHistory } from 'react-router';
 import Errors from '../components/Errors';
 
 function Signup({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [errors, setErrors] = useState([]);
-  const history = useHistory();
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [passwordConfirmation, setPasswordConfirmation] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [errors, setErrors] = useState([])
+  const history = useHistory()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -25,7 +25,6 @@ function Signup({ onLogin }) {
     .then((r) => {
       if (r.ok) {
         r.json().then((user) => onLogin(user))
-        // history.push("/me")
       } else {
         r.json().then((err) => setErrors(err.errors))
       }

@@ -1,11 +1,12 @@
+import { useSelector } from 'react-redux';
 import IconBtn from './IconBtn';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 function BalanceEl({ balance, onDelete, onEdit }) {
-  function handleDelete() {
-    console.log({balance})
+  const currentUser = useSelector((state) => state.currentUser.entities)
 
+  function handleDelete() {
     fetch(`/balances/${balance.id}`, {
       method: "DELETE",
       headers: {
@@ -21,12 +22,15 @@ function BalanceEl({ balance, onDelete, onEdit }) {
     onEdit(balance)
   }
 
+  // function handleAddPreset() {
+  // }
+
   return(
     <div className="BalanceEl Heading">
       <p>{balance.name}</p>
       <p>${balance.amount.toFixed(2)}</p>
       <div>
-        {/* <Button onClick={handleEdit} variant="outlined" size="small" startIcon={<AddIcon />}>$10</Button> */}
+        {/* <Button onClick={handleAddPreset} variant="outlined" size="small" startIcon={<AddIcon />}>{`$${currentUser.preset}`}</Button> */}
         <IconBtn onClick={handleEdit} button="Edit" />
         <IconBtn onClick={handleDelete} button="Delete" />
       </div>
